@@ -5,6 +5,7 @@ Uses `stow` to manage symlinks.
 **Platform Table**
 |		| Arch Linux	| Mac OSX	|
 | ------------- | ------------- | ------------- | 
+| X		| [x]		|		|
 | alacritty	| [x]		| [x]		|
 | feh		| [x]		|		|
 | fonts		| [x]		|		|
