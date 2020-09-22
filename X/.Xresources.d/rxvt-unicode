@@ -1,0 +1,47 @@
+! -----------------
+!  URxvt settings
+! -----------------
+
+! Basic
+URxvt.depth:           	32
+URxvt.transparent:    	0
+URxvt.internalBorder:   0
+URxvt.lineSpace:        0
+
+! Fonts
+URxvt.allow_bold:       1
+URxvt.font: 		xft:Roboto Mono Nerd Font Mono:pixelsize=18
+URxvt.boldFont: 	xft:Roboto Mono Nerd Font Mono:bold:pixelsize=18
+URxvt.italicFont: 	xft:Roboto Mono Nerd Font Mono:italic:pixelsize=18
+URxvt.boldItalicFont: 	xft:Roboto Mono Nerd Font Mono:bold:italic:pixelsize=18
+
+! Perl extensions
+URxvt.perl-ext-common: 	default,matcher,clipboard,resize-font
+URxvt.matcher.button:  	1
+URxvt.urlLauncher:     	firefox
+
+! must disable for resize-font
+URxvt.iso14755: 	0
+URxvt.iso14755_52:	0
+
+! scrollback lines
+URxvt.saveLines:        1000
+
+! loginShell ???
+URxvt.loginShell:  	1
+
+! Scrollbar
+URxvt.scrollBar:      	0
+
+! Cursor
+URxvt.cursorBlink:     	0
+URxvt.cursorUnderline: 	0
+
+! Pointer
+URxvt.pointerBlank:   	1
+
+! fade when not focused (not really helpful with i3)
+URxvt.fading:		0
+
+! solarized thing
+URxvt.intesityStyles:	1

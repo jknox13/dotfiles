@@ -1,0 +1,32 @@
+#!/bin/sh
+
+CONFIG=""
+CANDIDATES[0]="$XDG_CONFIG_HOME/alacritty/alacritty.yml"
+CANDIDATES[1]="$XDG_CONFIG_HOME/alacritty.yml"
+CANDIDATES[2]="$HOME/.config/alacritty/alacritty.yml"
+CANDIDATES[3]="$HOME/.alacritty.yml"
+
+for c in "${CANDIDATES[@]}"
+do
+	if [ -e "$c" ]
+	then
+		CONFIG="$c"
+		break
+	fi
+done
+
+if [ -z "$CONFIG" ]
+then
+	echo "Alacritty config not found"
+	exit 1
+fi
+
+if [ `grep -q "\&${1}" "${CONFIG}" >/dev/null; echo $?` != 0 ]
+then
+	echo "Color scheme ${1} not found in ${CONFIG}"
+	exit 1
+fi
+
+# MacOSX: `sed` expects an extension for the backup file
+# (we're destructively overwriting here)
+sed -i "" "s/\(colors\: \*\).*$/\1${1}/" "${CONFIG}"

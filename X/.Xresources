@@ -1,0 +1,6 @@
+! ----------------
+! Load config files
+! -----------------
+#include ".Xresources.d/xresources/Xresources.dark"
+#include ".Xresources.d/xft"
+#include ".Xresources.d/rxvt-unicode"
