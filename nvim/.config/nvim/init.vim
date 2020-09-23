@@ -12,17 +12,19 @@
 " -----------------------------------------------------------------------------
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'ayu-theme/ayu-vim'
+" Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'preservim/nerdtree'
+" Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
-" Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-unimpaired'
 call plug#end()
 
 " -----------------------------------------------------------------------------
@@ -56,6 +58,11 @@ set shortmess+=c             " Don't pass messages to |ins-completion-menu|.
 " -----------------------------------------------------------------------------
 " Colorscheme
 " -----------------------------------------------------------------------------
+
+set t_Co=256
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 set termguicolors
 let ayucolor="mirage"  " [light|mirage|dark]
 colorscheme ayu
@@ -65,16 +72,15 @@ let g:lightline = {'colorscheme': 'ayu'}
 " -----------------------------------------------------------------------------
 " Nerd Tree
 " -----------------------------------------------------------------------------
-filetype plugin indent on
-let NERDTreeShowHidden=1
-
-" Open Tree when vim is opened without file
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Close vim if Tree is only buffer open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
+"let NERDTreeShowHidden=1
+"
+"" Open Tree when vim is opened without file
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"
+"" Close vim if Tree is only buffer open
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"
 " -----------------------------------------------------------------------------
 " Key Mappings
 " -----------------------------------------------------------------------------
@@ -102,7 +108,8 @@ map <C-n> :NERDTreeToggle<CR>
 " -----------------------------------------------------------------------------
 " NVim - LSP
 " -----------------------------------------------------------------------------
+let g:python3_host_prog = '$HOME/venv/bin/python3'
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
-lua require'nvim_lsp'.bashls.setup{ on_attach=require'completion'.on_attach }
+"lua require'nvim_lsp'.bashls.setup{ on_attach=require'completion'.on_attach }
 lua require'nvim_lsp'.pyls.setup{ on_attach=require'completion'.on_attach }
