@@ -6,9 +6,7 @@
 " | | | | | | |_ \ V /| | | | | | |
 " |_|_| |_|_|\__(_)_/ |_|_| |_| |_|
 " ---------------------------------
-
 syntax on
-
 set number
 set relativenumber
 set tabstop=4 softtabstop=4
@@ -58,7 +56,7 @@ unlet plugin_install_path
 " Colorscheme
 " -----------------------------------------------------------------------------
 set termguicolors
-let ayucolor="dark"  " [light|mirage|dark]
+let ayucolor="mirage"  " [light|mirage|dark]
 colorscheme ayu
 
 let g:lightline = {'colorscheme': 'ayu'}
