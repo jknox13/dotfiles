@@ -6,7 +6,31 @@
 " | | | | | | |_ \ V /| | | | | | |
 " |_|_| |_|_|\__(_)_/ |_|_| |_| |_|
 " ---------------------------------
+
+" -----------------------------------------------------------------------------
+" Plugins (using Plug)
+" -----------------------------------------------------------------------------
+call plug#begin("$HOME/.local/share/nvim/site/autoload/plug.vim")
+Plug 'ayu-theme/ayu-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+" Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-surround'
+call plug#end()
+
+" -----------------------------------------------------------------------------
+" Base Settings
+" -----------------------------------------------------------------------------
 syntax on
+filetype plugin indent on
+
 set number
 set relativenumber
 set tabstop=4 softtabstop=4
@@ -21,36 +45,13 @@ set undofile
 set incsearch
 set scrolloff=8
 set colorcolumn=80
+set encoding=utf-8
 
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set cmdheight=2              " Give more space for displaying messages.
 set updatetime=50            " shorten updatetime (from 4000ms)
 set shortmess+=c             " Don't pass messages to |ins-completion-menu|.
-
-" -----------------------------------------------------------------------------
-" Plugins (using Plug)
-" -----------------------------------------------------------------------------
-let autoload_plug_path = stdpath('data') . '/site/autoload/plug.vim'
-let plugin_install_path = stdpath('data') . '/plugged'
-
-" Install Plugins
-call plug#begin(plugin_install_path)         " specifies directory for pluggins
-Plug 'ayu-theme/ayu-vim'
-Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'preservim/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-surround'
-call plug#end()                              " initialize plugin system
-
-unlet autoload_plug_path
-unlet plugin_install_path
 
 " -----------------------------------------------------------------------------
 " Colorscheme

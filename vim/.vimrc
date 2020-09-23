@@ -1,35 +1,26 @@
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " VIMRC
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" Vundle
-set nocompatible  " Required
-filetype off
-set rtp+=$HOME/.vim/bundle/Vundle.vim
-call vundle#begin()
 
-" Let Vundle manage itself
-Plugin 'VundleVim/Vundle.vim'
-
-" Plugins
-Plugin 'dense-analysis/ale'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'itchyny/lightline.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'python-mode/python-mode'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'nvie/vim-flake8'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-markdown'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-sensible'
-
-" Color Schemes
-Plugin 'altercation/vim-colors-solarized'
-
-" Required. Plugins available after.
-call vundle#end()
+" -----------------------------------------------------------------------------
+" Plugins (using Plug)
+" -----------------------------------------------------------------------------
+call plug#begin("$HOME/.vim/autoload/plug.vim")
+Plug 'altercation/vim-colors-solarized'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dense-analysis/ale'
+Plug 'itchyny/lightline.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'nvie/vim-flake8'
+Plug 'preservim/nerdtree'
+Plug 'python-mode/python-mode'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-sensible'
+Plug 'vim-syntastic/syntastic'
+call plug#end()
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Base Vim
