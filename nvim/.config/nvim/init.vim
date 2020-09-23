@@ -10,7 +10,7 @@
 " -----------------------------------------------------------------------------
 " Plugins (using Plug)
 " -----------------------------------------------------------------------------
-call plug#begin("$HOME/.local/share/nvim/site/autoload/plug.vim")
+call plug#begin(stdpath('data') . '/plugged')
 Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
