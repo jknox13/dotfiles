@@ -3,20 +3,19 @@
 Uses `stow` to manage symlinks.
 
 **Platform Table**
-|		| Arch Linux	| Mac OSX	|
-| ------------- | ------------- | ------------- | 
-| X		| [x]		|		|
+|	       	| Arch Linux| Mac OSX	|
+| --------- | --------- | --------- | 
+| X		    | [x]		|	    	|
 | alacritty	| [x]		| [x]		|
-| feh		| [x]		|		|
-| fonts		| [x]		|		|
-| homebrew	| 		| [x]		|
-| i3		| [x]		|		|
-| karabiner	| 		| [x]		|
+| feh		| [x]		|   		|
+| fonts		| [x]		|   		|
+| homebrew	| 		    | [x]		|
+| i3		| [x]		|   		|
+| karabiner	| 	    	| [x]		|
 | neofetch	| [x]		| [x]		|
 | nvim		| [x]		| [x]		|
-| polybar	| [x]		|		|
+| polybar	| [x]		|   		|
 | tmux		| [x]		| [x]		|
-| vim\*		| [x]		| [x]		|
 | zsh		| [x]		| [x]		|
 
 ## Arch Linux instructions
