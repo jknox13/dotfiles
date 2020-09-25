@@ -20,6 +20,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'ntpeters/vim-better-whitespace'
 " Plug 'preservim/nerdtree'
+" Plug 'vim-python/python-syntax'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tpope/vim-commentary'
 " Plug 'tpope/vim-markdown'
@@ -81,19 +82,21 @@ let g:lightline = {'colorscheme': 'ayu'}
 "" Close vim if Tree is only buffer open
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "
+" map <C-n> :NERDTreeToggle<CR>
+"
 " -----------------------------------------------------------------------------
 " Key Mappings
 " -----------------------------------------------------------------------------
 let mapleader = "\<Space>"
 
 " LSP
-nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
-nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
+"nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
+"nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
+"nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
+"nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
+"nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
+"nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
+"nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
 
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
@@ -103,13 +106,11 @@ imap <C-e> <end>
 cmap <C-a> <home>
 cmap <C-e> <end>
 
-map <C-n> :NERDTreeToggle<CR>
 
 " -----------------------------------------------------------------------------
 " NVim - LSP
 " -----------------------------------------------------------------------------
-let g:python3_host_prog = '$HOME/venv/bin/python3'
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+"let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
 "lua require'nvim_lsp'.bashls.setup{ on_attach=require'completion'.on_attach }
-lua require'nvim_lsp'.pyls.setup{ on_attach=require'completion'.on_attach }
+"lua require'nvim_lsp'.pyls.setup{ on_attach=require'completion'.on_attach }
