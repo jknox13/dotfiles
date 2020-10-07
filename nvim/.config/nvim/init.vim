@@ -27,6 +27,7 @@ Plug 'tpope/vim-commentary'
 " Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-surround'
 " Plug 'tpope/vim-unimpaired'
+Plug 'unblevable/quick-scope'
 call plug#end()
 
 " -----------------------------------------------------------------------------
@@ -76,6 +77,11 @@ let ayucolor="mirage"  " [light|mirage|dark]
 colorscheme ayu
 
 let g:lightline = {'colorscheme': 'ayu'}
+
+" -----------------------------------------------------------------------------
+" Quickscope
+" -----------------------------------------------------------------------------
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " -----------------------------------------------------------------------------
 " Nerd Tree
