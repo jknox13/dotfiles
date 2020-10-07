@@ -48,7 +48,6 @@ export VISUAL=nvim
 # Alias
 # -----------------------------------------------------------------------------
 alias vim=nvim
-alias tmux="tmux -2"
 
 # -----------------------------------------------------------------------------
 # Mac OSX path
@@ -59,4 +58,13 @@ then
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
     export PATH="/usr/local/Cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
+fi
+
+# -----------------------------------------------------------------------------
+# FB
+# -----------------------------------------------------------------------------
+fb_config="$HOME/.zsh/fb.zsh"
+if [ -f "$fb_config" ]
+then
+    source "$fb_config"
 fi

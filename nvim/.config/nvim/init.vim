@@ -19,6 +19,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'preservim/nerdtree'
 " Plug 'vim-python/python-syntax'
 Plug 'ryanoasis/vim-devicons'
@@ -49,12 +50,18 @@ set incsearch
 set scrolloff=8
 set colorcolumn=80
 set encoding=utf-8
+set mouse=n
 
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set cmdheight=2              " Give more space for displaying messages.
 set updatetime=50            " shorten updatetime (from 4000ms)
 set shortmess+=c             " Don't pass messages to |ins-completion-menu|.
+
+" -----------------------------------------------------------------------------
+" Filetypes
+" -----------------------------------------------------------------------------
+autocmd FileType php setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 
 " -----------------------------------------------------------------------------
 " Colorscheme
@@ -99,7 +106,11 @@ let mapleader = "\<Space>"
 "nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
 
 nnoremap <Leader>f :Files<CR>
-nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
+nnoremap <Leader>i :edit ~/.config/nvim/init.vim<CR>
+nnoremap <Leader><CR> :source ~/.config/nvim/init.vim<CR>
+nnoremap <Leader>ex :Explore<CR>
+nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+nnoremap <Leader>sp :setlocal spell spelllang=en_us<CR>
 
 imap <C-a> <home>
 imap <C-e> <end>
