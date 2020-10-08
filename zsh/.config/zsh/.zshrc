@@ -8,7 +8,7 @@
 # -------------------------
 
 # Antigen
-source $HOME/.zsh/antigen.zsh
+source "$HOME/.local/share/zsh/antigen.zsh"
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
