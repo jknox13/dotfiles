@@ -45,7 +45,7 @@ set smartindent
 set noswapfile
 set noshowmode
 set nobackup
-set undodir=~/.vim/undodir
+set undodir="$HOME/.cache/vim/undodir"
 set undofile
 set incsearch
 set scrolloff=8
@@ -122,7 +122,6 @@ imap <C-a> <home>
 imap <C-e> <end>
 cmap <C-a> <home>
 cmap <C-e> <end>
-
 
 " -----------------------------------------------------------------------------
 " NVim - LSP

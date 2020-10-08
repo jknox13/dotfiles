@@ -1,3 +1,2 @@
-vim/.vim/undodir
 *.netrwhist
-zsh/.zsh/fb.zsh
+zsh/.config/zsh/fb.zsh

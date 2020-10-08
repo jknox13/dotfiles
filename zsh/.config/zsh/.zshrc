@@ -41,8 +41,11 @@ PROMPT='%}%(12V.%F{242}%12v%f .)%(?.%F{green}.%F{red})${PURE_PROMPT_SYMBOL:->>}%
 export BROWSER="$(if [[ -n "$DISPLAY" ]]; then echo 'firefox'; else echo 'links'; fi)"
 export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'nvim'; else echo 'vi'; fi)"
 export HISTFILE="$HOME/.zsh_history"
-export HISTFILESIZE=10000
+export HISTFILESIZE=130000
+export SAVEHIST=130000
+export TMPDIR="/var/tmp"
 export VISUAL=nvim
+export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 
 # -----------------------------------------------------------------------------
 # Alias
@@ -53,17 +56,18 @@ alias vim=nvim
 # Mac OSX path
 # -----------------------------------------------------------------------------
 # TODO: define better MacOSX check
-if [ -e "/usr/local/Cellar" ]
+cellar="/usr/local/Cellar"
+if [ -e "$cellar" ]
 then
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
-    export PATH="/usr/local/Cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
+    export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
 fi
 
 # -----------------------------------------------------------------------------
 # FB
 # -----------------------------------------------------------------------------
-fb_config="$HOME/.zsh/fb.zsh"
+fb_config="$HOME/.config/zsh/fb.zsh"
 if [ -f "$fb_config" ]
 then
     source "$fb_config"
