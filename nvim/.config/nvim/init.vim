@@ -11,23 +11,51 @@
 " Plugins (using Plug)
 " -----------------------------------------------------------------------------
 call plug#begin(stdpath('data') . '/plugged')
+" Appearance
+" -------------------------
 Plug 'ayu-theme/ayu-vim'
-" Plug 'dense-analysis/ale'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Plug 'nvim-lua/lsp-status.nvim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'ryanoasis/vim-devicons'
+
+" IDE & LSP
+" -------------------------
+" Plug 'dense-analysis/ale'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'nvim-lua/diagnostic-nvim'
+
+" Navigation
+" -------------------------
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " Plug 'preservim/nerdtree'
-" Plug 'vim-python/python-syntax'
-Plug 'ryanoasis/vim-devicons'
-Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-unimpaired'
 Plug 'unblevable/quick-scope'
+
+" Ease of Use
+" -------------------------
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-reapeat'
+
+" C/Cpp
+" -------------------------
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Hack
+" -------------------------
+Plug 'hhvm/vim-hack'
+
+" JavaScript
+" -------------------------
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
+
+" Python
+" -------------------------
+Plug 'vim-python/python-syntax'
+
 call plug#end()
 
 " -----------------------------------------------------------------------------
@@ -38,14 +66,13 @@ filetype plugin indent on
 
 set number
 set relativenumber
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set expandtab
+setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
 set smartindent
 set noswapfile
+set nohlsearch
 set noshowmode
 set nobackup
-set undodir="$HOME/.cache/vim/undodir"
+set undodir=$HOME/.cache/vim/undodir
 set undofile
 set incsearch
 set scrolloff=8
@@ -58,11 +85,6 @@ set completeopt=menuone,noinsert,noselect
 set cmdheight=2              " Give more space for displaying messages.
 set updatetime=50            " shorten updatetime (from 4000ms)
 set shortmess+=c             " Don't pass messages to |ins-completion-menu|.
-
-" -----------------------------------------------------------------------------
-" Filetypes
-" -----------------------------------------------------------------------------
-autocmd FileType php setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 
 " -----------------------------------------------------------------------------
 " Colorscheme
@@ -102,15 +124,6 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " -----------------------------------------------------------------------------
 let mapleader = "\<Space>"
 
-" LSP
-"nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
-"nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
-"nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
-"nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
-"nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
-"nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
-"nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
-
 nnoremap <Leader>f :Files<CR>
 nnoremap <Leader>i :edit ~/.config/nvim/init.vim<CR>
 nnoremap <Leader><CR> :source ~/.config/nvim/init.vim<CR>
@@ -126,7 +139,46 @@ cmap <C-e> <end>
 " -----------------------------------------------------------------------------
 " NVim - LSP
 " -----------------------------------------------------------------------------
-"let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:ale_disable_lsp = 1
+let g:ale_fix_on_save = 1
+let b:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
 
-"lua require'nvim_lsp'.bashls.setup{ on_attach=require'completion'.on_attach }
 "lua require'nvim_lsp'.pyls.setup{ on_attach=require'completion'.on_attach }
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_show_sign = 1
+let g:diagnostic_insert_delay = 1
+let g:space_before_virtual_text = 10
+
+autocmd FileType javascript,bash,python setlocal signcolumn=yes
+:lua << EOF
+    local nvim_lsp = require('nvim_lsp')
+    local completion = require('completion')
+    local diagnostic = require('diagnostic')
+
+    local on_attach = function(client)
+        completion.on_attach(client)
+        diagnostic.on_attach(client)
+    end
+
+    nvim_lsp.bashls.setup{on_attach = on_attach}
+
+    nvim_lsp.flow.setup{
+--         settings = {
+--             flow = {
+--                 useLSP = false;
+--                 showStatus = true;
+--                 runOnEdit = false;
+--             };
+--         };
+        on_attach = on_attach;
+    }
+EOF
+
+nnoremap <leader>vca :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>vd  :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>vh  :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>vi  :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
+nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
