@@ -7,7 +7,18 @@
 #  /___|___/_| |_|_|  \___|
 # -------------------------
 
+# -----------------------------------------------------------------------------
+# FB
+# -----------------------------------------------------------------------------
+fb_config="$HOME/.config/zsh/fb.zsh"
+if [ -f "$fb_config" ]
+then
+    source "$fb_config"
+fi
+
+# -----------------------------------------------------------------------------
 # Antigen
+# -----------------------------------------------------------------------------
 source "$HOME/.local/share/zsh/antigen.zsh"
 
 # Load the oh-my-zsh's library.
@@ -62,13 +73,4 @@ then
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
     export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
-fi
-
-# -----------------------------------------------------------------------------
-# FB
-# -----------------------------------------------------------------------------
-fb_config="$HOME/.config/zsh/fb.zsh"
-if [ -f "$fb_config" ]
-then
-    source "$fb_config"
 fi
