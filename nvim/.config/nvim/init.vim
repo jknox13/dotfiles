@@ -35,6 +35,7 @@ Plug 'unblevable/quick-scope'
 
 " Ease of Use
 " -------------------------
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-reapeat'
@@ -124,12 +125,21 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " -----------------------------------------------------------------------------
 let mapleader = "\<Space>"
 
-nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>f  :Files<CR>
+nnoremap <Leader>b  :Buffers<CR>
+nnoremap <Leader>ag :Ag<Space>
+nnoremap <Leader>rg :Rg<Space>
+
 nnoremap <Leader>i :edit ~/.config/nvim/init.vim<CR>
 nnoremap <Leader><CR> :source ~/.config/nvim/init.vim<CR>
-nnoremap <Leader>ex :Explore<CR>
+
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
 nnoremap <Leader>sp :setlocal spell spelllang=en_us<CR>
+
+" TODO: encorporate lightlight change
+nnoremap <Leader>csd :let ayucolor="dark"<bar>:colorscheme ayu<CR>
+nnoremap <Leader>csm :let ayucolor="mirage"<bar>:colorscheme ayu<CR>
+nnoremap <Leader>csl :let ayucolor="light"<bar>:colorscheme ayu<CR>
 
 imap <C-a> <home>
 imap <C-e> <end>
@@ -182,3 +192,5 @@ nnoremap <leader>vi  :lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>vsh :lua vim.lsp.buf.signature_help()<CR>
 nnoremap <leader>vrr :lua vim.lsp.buf.references()<CR>
 nnoremap <leader>vrn :lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>vic :lua vim.lsp.buf.incoming_calls()<CR>
+nnoremap <leader>voc :lua vim.lsp.buf.outgoing_calls()<CR>
