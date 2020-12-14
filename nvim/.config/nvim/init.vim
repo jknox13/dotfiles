@@ -10,6 +10,7 @@
 " -----------------------------------------------------------------------------
 " Plugins (using Plug)
 " -----------------------------------------------------------------------------
+let g:ale_disable_lsp = 1
 call plug#begin(stdpath('data') . '/plugged')
 " Appearance
 " -------------------------
@@ -21,7 +22,7 @@ Plug 'ryanoasis/vim-devicons'
 
 " IDE & LSP
 " -------------------------
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/diagnostic-nvim'
@@ -119,7 +120,7 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 "
 " map <C-n> :NERDTreeToggle<CR>
-"
+
 " -----------------------------------------------------------------------------
 " Key Mappings
 " -----------------------------------------------------------------------------
@@ -127,13 +128,18 @@ let mapleader = "\<Space>"
 
 nnoremap <Leader>f  :Files<CR>
 nnoremap <Leader>b  :Buffers<CR>
+nnoremap <Leader>m  :Marks<CR>
 nnoremap <Leader>ag :Ag<Space>
 nnoremap <Leader>rg :Rg<Space>
+
+" TODO: figure out how to do this with fnamemodify()
+nnoremap <Leader>eh :edit %:h/
 
 nnoremap <Leader>i :edit ~/.config/nvim/init.vim<CR>
 nnoremap <Leader><CR> :source ~/.config/nvim/init.vim<CR>
 
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+nnoremap <leader>lcd :lcd %:p:h<CR>:pwd<CR>
 nnoremap <Leader>sp :setlocal spell spelllang=en_us<CR>
 
 " TODO: encorporate lightlight change
@@ -149,18 +155,18 @@ cmap <C-e> <end>
 " -----------------------------------------------------------------------------
 " NVim - LSP
 " -----------------------------------------------------------------------------
-let g:ale_disable_lsp = 1
-let g:ale_fix_on_save = 1
-let b:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
+" let g:ale_disable_lsp = 1
+" let g:ale_fix_on_save = 1
+" let b:ale_fixers = ['remove_trailing_lines', 'trim_whitespace']
 
-"lua require'nvim_lsp'.pyls.setup{ on_attach=require'completion'.on_attach }
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_show_sign = 1
 let g:diagnostic_insert_delay = 1
 let g:space_before_virtual_text = 10
 
-autocmd FileType javascript,bash,python setlocal signcolumn=yes
+autocmd FileType javascript,bash setlocal signcolumn=yes
+
 :lua << EOF
     local nvim_lsp = require('nvim_lsp')
     local completion = require('completion')
