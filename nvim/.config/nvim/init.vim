@@ -39,7 +39,7 @@ Plug 'unblevable/quick-scope'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-reapeat'
+Plug 'tpope/vim-repeat'
 
 " C/Cpp
 " -------------------------
