@@ -25,7 +25,6 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'dense-analysis/ale'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lua/diagnostic-nvim'
 
 " Navigation
 " -------------------------
@@ -168,18 +167,16 @@ let g:space_before_virtual_text = 10
 autocmd FileType javascript,bash setlocal signcolumn=yes
 
 :lua << EOF
-    local nvim_lsp = require('nvim_lsp')
+    local lspconfig = require('lspconfig')
     local completion = require('completion')
-    local diagnostic = require('diagnostic')
 
     local on_attach = function(client)
         completion.on_attach(client)
-        diagnostic.on_attach(client)
     end
 
-    nvim_lsp.bashls.setup{on_attach = on_attach}
+    lspconfig.bashls.setup{on_attach = on_attach}
 
-    nvim_lsp.flow.setup{
+    lspconfig.flow.setup{
 --         settings = {
 --             flow = {
 --                 useLSP = false;
