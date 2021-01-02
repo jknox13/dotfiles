@@ -1,11 +1,12 @@
 {
+    :devices {
+        :apple [{:vendor_id 1452}]
+    }
     :simlayers {
-        :symbols_left   {:key :n}
-        :symbols_right  {:key :t}
+        :symbols_left   {:key :j}
+        :symbols_right  {:key :f}
     }
     :main [
-        ;; Colemak-dh layout is handled in karabiner.json directly under
-        ;; simple_modifications
         {
             :des "Caps as LCtrl/Esc"
             :rules [
@@ -13,39 +14,81 @@
             ]
         }
         {
-            :des "Home row pinkies to Shift when held"
+            :des "Open Bracket as Backspace"
             :rules [
-                [:a :left_shift  nil {:alone :a}]
-                [:o :right_shift nil {:alone :o}]
+                [:##open_bracket :delete_or_backspace]
+            ]
+        }
+        {
+            :des "Quote as Return"
+            :rules [
+                [:##quote :return_or_enter]
             ]
         }
         {
             :des "Symbol layer (from home row pointers)"
             :rules [
-                [:q         :!S1                        :symbols_left]
-                [:w         :!S2                        :symbols_left]
-                [:f         :!S3                        :symbols_left]
-                [:p         :!S4                        :symbols_left]
-                [:b         :!S5                        :symbols_left]
-                [:a         :!Sbackslash                :symbols_left]
-                [:r         :backslash                  :symbols_left]
-                [:s         :!Sgrave_accent_and_tilde   :symbols_left]
-                [:t         :!Squote                    :symbols_left]
-                [:c         :grave_accent_and_tilde     :symbols_left]
-                [:d         :quote                      :symbols_left]
-                [:j         :!S6                        :symbols_right]
-                [:l         :!S7                        :symbols_right]
-                [:u         :!S8                        :symbols_right]
-                [:y         :!S9                        :symbols_right]
-                [:semicolon :!S0                        :symbols_right]
-                [:n         :!Shyphen                   :symbols_right]
-                [:e         :equal_sign                 :symbols_right]
-                [:i         :!Sopen_bracket             :symbols_right]
-                [:o         :!Sclose_bracket            :symbols_right]
-                [:h         :hyphen                     :symbols_right]
-                [:comma     :!Sequal_sign               :symbols_right]
-                [:period    :open_bracket               :symbols_right]
-                [:slash     :close_bracket              :symbols_right]
+                [:##q         :!S1                        :symbols_left]
+                [:##w         :!S2                        :symbols_left]
+                [:##e         :!S3                        :symbols_left]
+                [:##r         :!S4                        :symbols_left]
+                [:##t         :!S5                        :symbols_left]
+                [:##a         :!Sbackslash                :symbols_left]
+                [:##s         :backslash                  :symbols_left]
+                [:##d         :!Sgrave_accent_and_tilde   :symbols_left]
+                [:##f         :!Squote                    :symbols_left]
+                [:##x         :grave_accent_and_tilde     :symbols_left]
+                [:##c         :quote                      :symbols_left]
+                [:##y         :!S6                        :symbols_right]
+                [:##u         :!S7                        :symbols_right]
+                [:##i         :!S8                        :symbols_right]
+                [:##o         :!S9                        :symbols_right]
+                [:##p         :!S0                        :symbols_right]
+                [:##j         :!Shyphen                   :symbols_right]
+                [:##k         :equal_sign                 :symbols_right]
+                [:##l         :!Sopen_bracket             :symbols_right]
+                [:##semicolon :!Sclose_bracket            :symbols_right]
+                [:##m         :hyphen                     :symbols_right]
+                [:##comma     :!Sequal_sign               :symbols_right]
+                [:##period    :open_bracket               :symbols_right]
+                [:##slash     :close_bracket              :symbols_right]
+            ]
+        }
+        ;; Must be after symbols
+        {
+            :des "Home row pinkies to Shift when held"
+            :rules [
+                [:a         :left_shift  nil {:alone :a}]
+                [:semicolon :right_shift nil {:alone :o}]
+            ]
+        }
+        ;; Must be last
+        {
+            :des "Colemak-dh mod (with 'fat z')"
+            :rules [
+                [:##e           :f]
+                [:##r           :p]
+                [:##t           :b]
+                [:##y           :j]
+                [:##u           :l]
+                [:##i           :u]
+                [:##o           :y]
+                [:##p           :semicolon]
+                [:##s           :r]
+                [:##d           :s]
+                [:##f           :t]
+                [:##h           :m]
+                [:##j           :n]
+                [:##k           :e]
+                [:##l           :i]
+                [:##semicolon   :o]
+                [:##left_shift  :z]
+                [:##z           :x]
+                [:##x           :c]
+                [:##c           :d]
+                [:##b           :vk_none]
+                [:##n           :k]
+                [:##m           :h]
             ]
         }
     ]

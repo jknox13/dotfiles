@@ -3,13 +3,13 @@
 Uses `stow` to manage symlinks.
 
 **Platform Table**
-|	       	| Arch Linux| Mac OSX	|
-| --------- | --------- | --------- | 
-| X		    | [x]		|	    	|
+|	       	| Arch Linux	| Mac OSX	|
+| --------- 	| --------- 	| --------- 	|
+| X		| [x]		|	    	|
 | alacritty	| [x]		| [x]		|
 | feh		| [x]		|   		|
 | fonts		| [x]		|   		|
-| homebrew	| 		    | [x]		|
+| homebrew	| 		| [x]		|
 | i3		| [x]		|   		|
 | karabiner	| 	    	| [x]		|
 | neofetch	| [x]		| [x]		|
@@ -35,22 +35,6 @@ exec_always xcape -e 'Control_L=Escape'
 2. `brew install stow`
 3. `stow homebrew`
 4. Install `brew bundle --global`
-
-
-### Remap Caps Lock to Ctrl/Esc
-([THANK YOU Max Pechyonkin](https://medium.com/@pechyonkin/how-to-map-capslock-to-control-and-escape-on-mac-60523a64022b))
-  1. Install [Karabiner-Elements](https://pqrs.org/osx/karabiner/) to customize 
-     key bindings. (additionally unblock MacOS privacy issues)
-  2. `stow karabiner`
-  3. Enable rule:
-      * Karabiner-elements Preferences > Complex Modifications > Add Rule
-      * Enable 'Change caps_lock to Esc and Control'
-      * In 'Parameters' change the value of `to_if_alone_timeout_milliseconds` 
-       from 1000 to 500 milliseconds.
-  4. Remap keys:
-      * Karabiner-elements Preferences > Simple Modifications > Add item
-      * from Caps Lock to Left Control
-      * from Escape to Caps Lock
 
 
 ### [Optional] Latex
