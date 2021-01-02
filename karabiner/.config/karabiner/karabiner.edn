@@ -4,6 +4,8 @@
         :symbols_right  {:key :t}
     }
     :main [
+        ;; Colemak-dh layout is handled in karabiner.json directly under
+        ;; simple_modifications
         {
             :des "Caps as LCtrl/Esc"
             :rules [
