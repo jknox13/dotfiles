@@ -1,0 +1,50 @@
+{
+    :simlayers {
+        :symbols_left   {:key :n}
+        :symbols_right  {:key :t}
+    }
+    :main [
+        {
+            :des "Caps as LCtrl/Esc"
+            :rules [
+                [:##caps_lock :left_control nil {:alone :escape}]
+            ]
+        }
+        {
+            :des "Home row pinkies to Shift when held"
+            :rules [
+                [:a :left_shift  nil {:alone :a}]
+                [:o :right_shift nil {:alone :o}]
+            ]
+        }
+        {
+            :des "Symbol layer (from home row pointers)"
+            :rules [
+                [:q         :!S1                        :symbols_left]
+                [:w         :!S2                        :symbols_left]
+                [:f         :!S3                        :symbols_left]
+                [:p         :!S4                        :symbols_left]
+                [:b         :!S5                        :symbols_left]
+                [:a         :!Sbackslash                :symbols_left]
+                [:r         :backslash                  :symbols_left]
+                [:s         :!Sgrave_accent_and_tilde   :symbols_left]
+                [:t         :!Squote                    :symbols_left]
+                [:c         :grave_accent_and_tilde     :symbols_left]
+                [:d         :quote                      :symbols_left]
+                [:j         :!S6                        :symbols_right]
+                [:l         :!S7                        :symbols_right]
+                [:u         :!S8                        :symbols_right]
+                [:y         :!S9                        :symbols_right]
+                [:semicolon :!S0                        :symbols_right]
+                [:n         :!Shyphen                   :symbols_right]
+                [:e         :equal_sign                 :symbols_right]
+                [:i         :!Sopen_bracket             :symbols_right]
+                [:o         :!Sclose_bracket            :symbols_right]
+                [:h         :hyphen                     :symbols_right]
+                [:comma     :!Sequal_sign               :symbols_right]
+                [:period    :open_bracket               :symbols_right]
+                [:slash     :close_bracket              :symbols_right]
+            ]
+        }
+    ]
+}

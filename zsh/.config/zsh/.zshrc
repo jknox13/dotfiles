@@ -77,4 +77,6 @@ then
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
     export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
+
+    export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 fi

@@ -16,6 +16,7 @@ brew "bat"
 brew "node"
 brew "nvim", args: ['HEAD']
 brew "fzf"
+brew "yqrashawn/goku/goku"
 
 tap "homebrew/cask-fonts"
 cask "font-hack-nerd-font"
