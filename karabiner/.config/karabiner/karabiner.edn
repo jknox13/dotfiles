@@ -5,6 +5,8 @@
     :simlayers {
         :symbols_left   {:key :j}
         :symbols_right  {:key :f}
+        :direction      {:key :d}
+        :numpad         {:key :c}
     }
     :main [
         {
@@ -54,7 +56,35 @@
                 [:##slash     :close_bracket              :symbols_right]
             ]
         }
-        ;; Must be after symbols
+        {
+            :des "Directional layer (right side)"
+            :rules [
+                [:##h         :left_arrow   :direction]
+                [:##j         :down_arrow   :direction]
+                [:##k         :up_arrow     :direction]
+                [:##l         :right_arrow  :direction]
+                [:##m         :home         :direction]
+                [:##comma     :page_down    :direction]
+                [:##period    :page_up      :direction]
+                [:##slash     :end          :direction]
+              ]
+        }
+        {
+            :des "Numpad layer (right side)"
+            :rules [
+                [:##u         :keypad_7   :numpad]
+                [:##i         :keypad_8   :numpad]
+                [:##o         :keypad_9   :numpad]
+                [:##j         :keypad_4   :numpad]
+                [:##k         :keypad_5   :numpad]
+                [:##l         :keypad_6   :numpad]
+                [:##semicolon :keypad_0   :numpad]
+                [:##m         :keypad_1   :numpad]
+                [:##comma     :keypad_2   :numpad]
+                [:##period    :keypad_3   :numpad]
+              ]
+          }
+        ;; Must be after layers
         {
             :des "Home row pinkies to Shift when held"
             :rules [
@@ -62,7 +92,7 @@
                 [:semicolon :right_shift nil {:alone :o}]
             ]
         }
-        ;; Must be last
+        ;; Must be last (before killed keys)
         {
             :des "Colemak-dh mod (with 'fat z')"
             :rules [
@@ -89,6 +119,29 @@
                 [:##b           :vk_none]
                 [:##n           :k]
                 [:##m           :h]
+            ]
+        }
+        {
+            :des "Kill unused keys"
+            :rules [
+                [:##grave_accent_and_tilde  :vk_none]
+                [:##1                       :vk_none]
+                [:##2                       :vk_none]
+                [:##3                       :vk_none]
+                [:##4                       :vk_none]
+                [:##5                       :vk_none]
+                [:##6                       :vk_none]
+                [:##7                       :vk_none]
+                [:##8                       :vk_none]
+                [:##9                       :vk_none]
+                [:##0                       :vk_none]
+                [:##equal_sign              :vk_none]
+                [:##hyphen                  :vk_none]
+                [:##delete_or_backspace     :vk_none]
+                [:##close_bracket           :vk_none]
+                [:##backslash               :vk_none]
+                [:##return_or_enter         :vk_none]
+                [:##right_shift             :vk_none]
             ]
         }
     ]
