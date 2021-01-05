@@ -125,6 +125,16 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " -----------------------------------------------------------------------------
 let mapleader = "\<Space>"
 
+" consistency with C, D
+nnoremap Y y$
+
+" hard mode
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+
+" fzf
 nnoremap <Leader>f  :Files<CR>
 nnoremap <Leader>b  :Buffers<CR>
 nnoremap <Leader>m  :Marks<CR>
