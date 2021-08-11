@@ -165,7 +165,7 @@ cmap <C-e> <end>
         buf_set_keymap('n', '<leader>voc', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
 
         -- style
-        vim.g.completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+        vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
         vim.g.diagnostic_enable_virtual_text = 1
         vim.g.diagnostic_show_sign = 1
         vim.g.diagnostic_insert_delay = 1
