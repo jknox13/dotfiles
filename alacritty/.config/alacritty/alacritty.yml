@@ -6,6 +6,9 @@ live_config_reload: true
 scrolling:
   history: 10000
 
+font:
+    size: 16
+
 schemes:
   # Base16 Tomorrow 256 - alacritty color config
   # Chris Kempson (http://chriskempson.com)
