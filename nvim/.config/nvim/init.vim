@@ -10,7 +10,15 @@
 " -----------------------------------------------------------------------------
 " Plugins (using Plug)
 " -----------------------------------------------------------------------------
+" auto-install vim-plug
+const plug_path = stdpath('data') . '/site/autoload/plug.vim'
+if empty(glob(plug_path))
+  silent exe '!curl -fLo ' . plug_path . ' --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall
+endif
 call plug#begin(stdpath('data') . '/plugged')
+
 " Appearance
 " -------------------------
 Plug 'ayu-theme/ayu-vim'
@@ -26,8 +34,11 @@ Plug 'nvim-lua/completion-nvim'
 
 " Navigation
 " -------------------------
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'unblevable/quick-scope'
 
 " Ease of Use
@@ -121,11 +132,13 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 
 " fzf
-nnoremap <Leader>f  :Files<CR>
-nnoremap <Leader>b  :Buffers<CR>
-nnoremap <Leader>m  :Marks<CR>
-nnoremap <Leader>ag :Ag<Space>
-nnoremap <Leader>rg :Rg<Space>
+" nnoremap <Leader>f  :Files<CR>
+" nnoremap <Leader>b  :Buffers<CR>
+" nnoremap <Leader>m  :Marks<CR>
+" nnoremap <Leader>rg :Rg<Space>
+
+" telescope
+
 
 " TODO: figure out how to do this with fnamemodify()
 nnoremap <Leader>eh :edit %:h/
@@ -146,6 +159,17 @@ cmap <C-e> <end>
 " NVim - LSP
 " -----------------------------------------------------------------------------
 :lua << EOF
+    local opts = { noremap=true, silent=true }
+
+    -- Telescope
+    local telescope = require('telescope')
+
+    telescope.load_extension('fzf')
+    vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua telescope.builtin.find_files()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>lua telescope.builtin.live_grep()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>lua telescope.builtin.buffers()<CR>', opts)
+
+    -- LSP
     local lspconfig = require('lspconfig')
     local completion = require('completion')
 
@@ -153,16 +177,15 @@ cmap <C-e> <end>
         completion.on_attach(client)
 
         -- Mappings.
-        local opts = { noremap=true, silent=true }
-        buf_set_keymap('n', '<leader>vca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-        buf_set_keymap('n', '<leader>vd',  '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        buf_set_keymap('n', '<leader>vh',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-        buf_set_keymap('n', '<leader>vi',  '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-        buf_set_keymap('n', '<leader>vsh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-        buf_set_keymap('n', '<leader>vrr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-        buf_set_keymap('n', '<leader>vrn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-        buf_set_keymap('n', '<leader>vic', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
-        buf_set_keymap('n', '<leader>voc', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vd',  '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vh',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vi',  '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vsh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vrr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vrn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>vic', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', opts)
+        vim.api.nvim_set_keymap('n', '<leader>voc', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', opts)
 
         -- style
         vim.g.completion_matching_strategy_list = {'exact', 'substring', 'fuzzy'}
@@ -170,12 +193,12 @@ cmap <C-e> <end>
         vim.g.diagnostic_show_sign = 1
         vim.g.diagnostic_insert_delay = 1
         vim.g.space_before_virtual_text = 10
-        vim.opt_local.signcolumn = yes
+        -- vim.opt_local.signcolumn = yes
     end
 
-    local servers = { 'bashls', 'flow', 'hhvm', 'pyls' }
+    local servers = { 'bashls', 'flow', 'hh_client'}--, 'pyls' }
     for _, lsp in ipairs(servers) do
-      nvim_lsp[lsp].setup {
+      lspconfig[lsp].setup {
         on_attach = on_attach,
         flags = {
           debounce_text_changes = 150,
