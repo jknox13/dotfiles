@@ -34,11 +34,12 @@ Plug 'nvim-lua/completion-nvim'
 
 " Navigation
 " -------------------------
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Telescope is much much too slow for large projects, even with fzf-native
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'unblevable/quick-scope'
 
 " Ease of Use
@@ -132,12 +133,10 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 
 " fzf
-" nnoremap <Leader>f  :Files<CR>
-" nnoremap <Leader>b  :Buffers<CR>
-" nnoremap <Leader>m  :Marks<CR>
-" nnoremap <Leader>rg :Rg<Space>
-
-" telescope
+nnoremap <Leader>f  :Files<CR>
+nnoremap <Leader>b  :Buffers<CR>
+nnoremap <Leader>m  :Marks<CR>
+nnoremap <Leader>rg :Rg<Space>
 
 
 " TODO: figure out how to do this with fnamemodify()
@@ -162,12 +161,10 @@ cmap <C-e> <end>
     local opts = { noremap=true, silent=true }
 
     -- Telescope
-    local telescope = require('telescope')
-
-    telescope.load_extension('fzf')
-    vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>lua telescope.builtin.find_files()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>lua telescope.builtin.live_grep()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>lua telescope.builtin.buffers()<CR>', opts)
+    -- require('telescope').load_extension('fzf')
+    -- vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<CR>', opts)
+    -- vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>Telescope live_grep<CR>', opts)
+    -- vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<CR>', opts)
 
     -- LSP
     local lspconfig = require('lspconfig')
@@ -193,10 +190,10 @@ cmap <C-e> <end>
         vim.g.diagnostic_show_sign = 1
         vim.g.diagnostic_insert_delay = 1
         vim.g.space_before_virtual_text = 10
-        -- vim.opt_local.signcolumn = yes
+        vim.opt_local.signcolumn = 'yes:1'
     end
 
-    local servers = { 'bashls', 'flow', 'hh_client'}--, 'pyls' }
+    local servers = { 'bashls', 'flow', 'hh_client', 'pyls' }
     for _, lsp in ipairs(servers) do
       lspconfig[lsp].setup {
         on_attach = on_attach,
