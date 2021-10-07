@@ -66,6 +66,10 @@ Plug 'maxmellon/vim-jsx-pretty'
 " -------------------------
 Plug 'vim-python/python-syntax'
 
+" Writing
+" -------------------------
+Plug 'junegunn/goyo.vim'
+
 call plug#end()
 
 " -----------------------------------------------------------------------------

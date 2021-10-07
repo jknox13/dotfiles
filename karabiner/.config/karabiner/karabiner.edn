@@ -8,6 +8,14 @@
         :direction      {:key :d}
         :numpad         {:key :c}
     }
+    :profiles {
+    :Default {
+        :default true
+        :sim     147    ;; simultaneous_threshold_milliseconds (def: 50)
+        :alone   5000   ;; to_if_alone_timeout_milliseconds (def: 1000)
+                        ;; if keyup event comes within :alone ms from keydown, the key is not just pressed but held
+      }
+    }
     :main [
         {
             :des "Space as ctrl when held"
