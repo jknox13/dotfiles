@@ -69,6 +69,7 @@ Plug 'vim-python/python-syntax'
 " Writing
 " -------------------------
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 call plug#end()
 
@@ -123,6 +124,12 @@ nnoremap <Leader>csl :let ayucolor="light"<bar>:colorscheme ayu<CR>
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
 " -----------------------------------------------------------------------------
+" Writing
+" -----------------------------------------------------------------------------
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" -----------------------------------------------------------------------------
 " Key Mappings
 " -----------------------------------------------------------------------------
 let mapleader = "\<Space>"
@@ -141,7 +148,6 @@ nnoremap <Leader>f  :Files<CR>
 nnoremap <Leader>b  :Buffers<CR>
 nnoremap <Leader>m  :Marks<CR>
 nnoremap <Leader>rg :Rg<Space>
-
 
 " TODO: figure out how to do this with fnamemodify()
 nnoremap <Leader>eh :edit %:h/
