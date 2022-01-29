@@ -1,0 +1,71 @@
+#| --------------------------------------------------------------------------
+
+(deflayer name
+  _    _    _    _    _    _    _    _    _    _    _    _    _     _
+  _    _    _    _    _    _    _    _    _    _    _    _    _     _
+  _    _    _    _    _    _    _    _    _    _    _    _          _
+  _    _    _    _    _    _    _    _    _    _    _               _
+  _    _    _    _            _           _    _    _
+)
+
+  -------------------------------------------------------------------------- |#
+
+(defcfg
+  input  (device-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd")
+  output (uinput-sink "kmonad thinkpad-t14-iso-kbd")
+)
+
+(defalias
+  lt-sym (layer-toggle symbols)
+  lt-dir (layer-toggle directional)
+  lt-num (layer-toggle numpad)
+
+  ctlspc  (tap-next-release spc lctl)
+
+  aS      (tap-next-release a lshift)
+  rLn     (tap-next-release r @lt-num)
+  sLd     (tap-next-release s @lt-dir)
+  tLs     (tap-next-release t @lt-sym)
+  nLs     (tap-next-release n @lt-sym)
+  oS      (tap-next-release o rshift)
+)
+
+(defsrc
+  grv  1    2    3    4    5    6    7    8    9    0    -     =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [     ]    \
+  caps a    s    d    f    g    h    j    k    l    ;    '          ret
+  lsft z    x    c    v    b    n    m    ,    .    /               rsft
+  wkup lctl lmet lalt         spc         ralt sys rctl
+)
+
+(deflayer base
+  XX   1    2    3    4    5    6    7    8    9    0    XX   XX    XX
+  tab  q    w    f    p    b    j    l    u    y    ;    bspc XX    XX
+  esc  @aS  @rLn @sLd @tLs g    m    @nLs e    i    @oS  ret        XX
+  z    x    c    d    v    XX   k    h    ,    .    /               XX
+  wkup lctl lmet lalt         @ctlspc     ralt sys rctl
+)
+
+(deflayer symbols
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   {    }    $    %    ^    &    *    #    XX   XX   XX   XX
+  XX   \\   \(   \)   '    `    ~    -    =    +    !    XX        XX
+  XX   [    ]    "    |    XX   @    \_   <    >    XX             XX
+  _    _    _    _            _           _    _    _
+)
+
+(deflayer directional
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   home pgdn pgup end  XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   left down up   rght XX        XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX             XX
+  XX   XX   XX   XX           XX          XX   XX   XX
+)
+
+(deflayer numpad
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   *    7    8    9    =    XX   XX   XX
+  XX   XX   XX   XX   XX   XX   +    4    5    6    0    XX        XX
+  XX   XX   XX   XX   XX   XX   -    1    2    3    .              XX
+  XX   XX   XX   XX           XX          XX   XX   XX
+)
