@@ -36,7 +36,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load sindresorhus pure prompt
 antigen bundle mafredri/zsh-async
-antigen bundle sindresorhus/pure
+antigen bundle sindresorhus/pure@main
 
 # Tell Antigen that you're done.
 antigen apply
