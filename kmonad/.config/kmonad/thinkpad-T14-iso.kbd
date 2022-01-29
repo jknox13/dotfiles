@@ -20,14 +20,14 @@
   lt-dir (layer-toggle directional)
   lt-num (layer-toggle numpad)
 
-  ctlspc  (tap-next-release spc lctl)
+  ctlspc  (tap-hold-next-release 150 spc lctl)
 
-  aS      (tap-next-release a lshift)
-  rLn     (tap-next-release r @lt-num)
-  sLd     (tap-next-release s @lt-dir)
-  tLs     (tap-next-release t @lt-sym)
-  nLs     (tap-next-release n @lt-sym)
-  oS      (tap-next-release o rshift)
+  aS      (tap-hold-next-release 150 a lshift)
+  rLn     (tap-hold-next-release 150 r @lt-num)
+  sLd     (tap-hold-next-release 150 s @lt-dir)
+  tLs     (tap-hold-next-release 150 t @lt-sym)
+  nLs     (tap-hold-next-release 150 n @lt-sym)
+  oS      (tap-hold-next-release 150 o rshift)
 )
 
 (defsrc
@@ -50,7 +50,7 @@
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   {    }    $    %    ^    &    *    #    XX   XX   XX   XX
   XX   \\   \(   \)   '    `    ~    -    =    +    !    XX        XX
-  XX   [    ]    "    |    XX   @    \_   <    >    XX             XX
+  XX   [    ]    "    |    XX   @    \_   <    >    _              XX
   _    _    _    _            _           _    _    _
 )
 
@@ -66,6 +66,6 @@
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   *    7    8    9    =    XX   XX   XX
   XX   XX   XX   XX   XX   XX   +    4    5    6    0    XX        XX
-  XX   XX   XX   XX   XX   XX   -    1    2    3    .              XX
+  XX   XX   XX   XX   XX   XX   -    1    2    3    _              XX
   XX   XX   XX   XX           XX          XX   XX   XX
 )
