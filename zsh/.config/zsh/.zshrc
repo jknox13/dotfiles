@@ -28,23 +28,18 @@ antigen use oh-my-zsh
 antigen bundle command-not-found
 antigen bundle git
 antigen bundle tmux
-# antigen bundle vi-mode
+antigen bundle vi-mode
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load sindresorhus pure prompt
-antigen bundle mafredri/zsh-async
+# antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure@main
 
 # Tell Antigen that you're done.
 antigen apply
-
-# -----------------------------------------------------------------------------
-# Prompt (green vs magenta default)
-# -----------------------------------------------------------------------------
-PROMPT='%}%(12V.%F{242}%12v%f .)%(?.%F{green}.%F{red})${PURE_PROMPT_SYMBOL:->>}%f '
 
 # -----------------------------------------------------------------------------
 # ENV variables
@@ -60,7 +55,6 @@ export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated__'
-
 
 # -----------------------------------------------------------------------------
 # Alias
