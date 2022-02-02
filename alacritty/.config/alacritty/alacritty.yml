@@ -10,6 +10,9 @@ font:
     normal:
       family: RobotoMono Nerd Font Mono
     size: 12
+    offset:
+      x: -1
+    use_thin_strokes: true
 
 schemes:
   # Base16 Tomorrow 256 - alacritty color config
