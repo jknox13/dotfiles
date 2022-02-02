@@ -49,6 +49,7 @@ export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'nvim'; else echo 'vi'; fi)"
 export HISTFILE="$HOME/.zsh_history"
 export HISTFILESIZE=130000
 export SAVEHIST=130000
+export TERM=xterm-256color
 export TMPDIR="/var/tmp"
 export VISUAL=nvim
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
