@@ -9,9 +9,9 @@ scrolling:
 font:
     normal:
       family: RobotoMono Nerd Font Mono
-    size: 12
+    size: 13
     offset:
-      x: -1
+      x: -2
     use_thin_strokes: true
 
 schemes:
