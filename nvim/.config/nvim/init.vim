@@ -71,6 +71,10 @@ Plug 'vim-python/python-syntax'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
+" Other
+" -------------------------
+Plug 'kmonad/kmonad-vim'
+
 call plug#end()
 
 " -----------------------------------------------------------------------------
