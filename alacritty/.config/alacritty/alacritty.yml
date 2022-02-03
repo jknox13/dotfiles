@@ -8,11 +8,8 @@ scrolling:
 
 font:
     normal:
-      family: RobotoMono Nerd Font Mono
+      family: Hack Nerd Font Mono
     size: 13
-    offset:
-      x: -2
-    use_thin_strokes: true
 
 schemes:
   # Base16 Tomorrow 256 - alacritty color config
