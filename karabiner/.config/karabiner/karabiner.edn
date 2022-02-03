@@ -6,7 +6,7 @@
         :symbols_left   {:key :j}
         :symbols_right  {:key :f}
         :direction      {:key :d}
-        :numpad         {:key :c}
+        :numpad         {:key :s}
     }
     :profiles {
     :Default {
@@ -58,13 +58,13 @@
                 [:##z           :open_bracket               :symbols_left]
                 [:##x           :close_bracket              :symbols_left]
                 [:##c           :!Squote                    :symbols_left]
-                [:##v           :!Sgrave_accent_and_tilde   :symbols_left]
+                [:##v           :!Sbackslash                :symbols_right]
                 [:##y           :!S6                        :symbols_right]
                 [:##u           :!S7                        :symbols_right]
                 [:##i           :!S8                        :symbols_right]
                 [:##o           :!S3                        :symbols_right]
                 [:##p           :vk_none                    :symbols_right]
-                [:##h           :!Sbackslash                :symbols_right]
+                [:##h           :!Sgrave_accent_and_tilde   :symbols_left]
                 [:##j           :hyphen                     :symbols_right]
                 [:##k           :equal_sign                 :symbols_right]
                 [:##l           :!Sequal_sign               :symbols_right]
