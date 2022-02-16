@@ -23,26 +23,26 @@ call plug#begin(stdpath('data') . '/plugged')
 " -------------------------
 Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
-" Plug 'nvim-lua/lsp-status.nvim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'ryanoasis/vim-devicons'
 
-" IDE & LSP
+" LSP
 " -------------------------
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+" Plug 'nvim-lua/lsp-status.nvim'
+
+" Treesitter
+" -------------------------
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Navigation
 " -------------------------
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', {'do': { -> fzf#install()}}
 Plug 'junegunn/fzf.vim'
-" Telescope is much much too slow for large projects, even with fzf-native
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim'
-" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'unblevable/quick-scope'
 
-" Ease of Use
+" tpope is a rockstar
 " -------------------------
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -51,20 +51,20 @@ Plug 'tpope/vim-repeat'
 
 " C/Cpp
 " -------------------------
-Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Hack
 " -------------------------
-Plug 'hhvm/vim-hack'
+" Plug 'hhvm/vim-hack'
 
 " JavaScript
 " -------------------------
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
 " Python
 " -------------------------
-Plug 'vim-python/python-syntax'
+" Plug 'vim-python/python-syntax'
 
 " Writing
 " -------------------------
@@ -174,12 +174,6 @@ cmap <C-e> <end>
 :lua << EOF
     local opts = { noremap=true, silent=true }
 
-    -- Telescope
-    -- require('telescope').load_extension('fzf')
-    -- vim.api.nvim_set_keymap('n', '<leader>f', '<cmd>Telescope find_files<CR>', opts)
-    -- vim.api.nvim_set_keymap('n', '<leader>g', '<cmd>Telescope live_grep<CR>', opts)
-    -- vim.api.nvim_set_keymap('n', '<leader>b', '<cmd>Telescope buffers<CR>', opts)
-
     -- LSP
     local lspconfig = require('lspconfig')
     local completion = require('completion')
@@ -216,4 +210,5 @@ cmap <C-e> <end>
         }
       }
     end
+
 EOF
