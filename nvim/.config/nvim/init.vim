@@ -28,7 +28,7 @@ Plug 'ryanoasis/vim-devicons'
 
 " LSP
 " -------------------------
-Plug 'neovim/nvim-lspconfig'
+Plug 'jknox13/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/lsp-status.nvim'
 
@@ -210,5 +210,30 @@ cmap <C-e> <end>
         }
       }
     end
+
+    -- Treesitter
+    require'nvim-treesitter.configs'.setup {
+      ensure_installed = [
+        "bash",
+        "cpp",
+        "hack",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "make",
+        "python",
+        "rust",
+        "vim",
+      ]
+      sync_install = false,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      indent = {
+        enable = true,
+      },
+    }
 
 EOF
