@@ -169,33 +169,7 @@ cmap <C-a> <home>
 cmap <C-e> <end>
 
 " -----------------------------------------------------------------------------
-" NVim - LSP
+" Lua Modules
 " -----------------------------------------------------------------------------
 lua require('lsp')
-:lua << EOF
-    -- Treesitter
-    require'nvim-treesitter.configs'.setup {
-      ensure_installed = {
-        "bash",
-        "cpp",
-        "hack",
-        "html",
-        "javascript",
-        "json",
-        "lua",
-        "make",
-        "python",
-        "rust",
-        "vim",
-      },
-      sync_install = false,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      indent = {
-        enable = true,
-      },
-    }
-
-EOF
+lua require('treesitter')
