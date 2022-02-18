@@ -213,7 +213,7 @@ cmap <C-e> <end>
 
     -- Treesitter
     require'nvim-treesitter.configs'.setup {
-      ensure_installed = [
+      ensure_installed = {
         "bash",
         "cpp",
         "hack",
@@ -225,7 +225,7 @@ cmap <C-e> <end>
         "python",
         "rust",
         "vim",
-      ]
+      },
       sync_install = false,
       highlight = {
         enable = true,
