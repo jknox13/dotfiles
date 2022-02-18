@@ -26,8 +26,6 @@ antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle command-not-found
-antigen bundle git
-antigen bundle tmux
 antigen bundle vi-mode
 
 # Syntax highlighting bundle.
@@ -35,7 +33,6 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load sindresorhus pure prompt
-# antigen bundle mafredri/zsh-async
 antigen bundle sindresorhus/pure@main
 
 # Tell Antigen that you're done.
