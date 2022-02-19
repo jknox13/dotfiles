@@ -60,6 +60,12 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated_
 alias vim=nvim
 
 # -----------------------------------------------------------------------------
+# Completion opts
+# -----------------------------------------------------------------------------
+# Remove . & .. from completions
+zstyle ':completion:*' special-dirs false
+
+# -----------------------------------------------------------------------------
 # Mac OSX path
 # -----------------------------------------------------------------------------
 # TODO: define better MacOSX check
