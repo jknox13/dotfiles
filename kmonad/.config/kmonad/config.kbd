@@ -1,11 +1,13 @@
 #| --------------------------------------------------------------------------
 
 (deflayer name
+_    _    _    _    _    _    _    _    _    _    _    _    _    _    _   _   _
   _    _    _    _    _    _    _    _    _    _    _    _    _     _
   _    _    _    _    _    _    _    _    _    _    _    _    _     _
   _    _    _    _    _    _    _    _    _    _    _    _          _
   _    _    _    _    _    _    _    _    _    _    _               _
-  _    _    _    _            _           _    _    _
+  _    _    _    _            _           _    _    _           _   _   _
+                                                                _   _   _
 )
 
   -------------------------------------------------------------------------- |#
@@ -31,41 +33,51 @@
 )
 
 (defsrc
+esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home end  ins  del
   grv  1    2    3    4    5    6    7    8    9    0    -     =    bspc
   tab  q    w    e    r    t    y    u    i    o    p    [     ]    \
   caps a    s    d    f    g    h    j    k    l    ;    '          ret
   lsft z    x    c    v    b    n    m    ,    .    /               rsft
-  wkup lctl lmet lalt         spc         ralt sys rctl
+  wkup lctl lmet lalt         spc         ralt sys rctl        pgdn up   pgup
+                                                               left down rght
 )
 
 (deflayer base
+esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home end  ins  del
   XX   1    2    3    4    5    6    7    8    9    0    XX   XX    XX
   tab  q    w    f    p    b    j    l    u    y    ;    bspc XX    XX
   esc  @aS  @rLn @sLd @tLs g    m    @nLs e    i    @oS  ret        XX
   z    x    c    d    v    XX   k    h    ,    .    /               XX
-  wkup lctl lmet lalt         @ctlspc     ralt sys rctl
+  wkup lctl lalt lmet         @ctlspc     ralt sys rctl        pgdn up   pgup
+                                                               left down rght
 )
 
 (deflayer symbols
+XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   {    }    $    %    ^    &    *    #    XX   XX   XX   XX
   XX   \\   \(   \)   '    `    ~    -    =    +    !    XX        XX
   XX   [    ]    "    @    XX   |    \_   <    >    _              XX
-  _    _    _    _            _           _    _    _
+  _    _    _    _            _           _    _    _          XX  XX  XX
+                                                               XX  XX  XX
 )
 
 (deflayer directional
+XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   XX   home pgdn pgup end  XX   XX   XX
   XX   XX   XX   XX   XX   XX   XX   left down up   rght XX        XX
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX             XX
-  XX   XX   XX   XX           XX          XX   XX   XX
+  _    _    _    _            _           _    _    _          XX  XX  XX
+                                                               XX  XX  XX
 )
 
 (deflayer numpad
+XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   *    7    8    9    =    XX   XX   XX
   XX   XX   XX   XX   XX   XX   +    4    5    6    0    XX        XX
   XX   XX   XX   XX   XX   XX   -    1    2    3    _              XX
-  XX   XX   XX   XX           XX          XX   XX   XX
+  _    _    _    _            _           _    _    _          XX  XX  XX
+                                                               XX  XX  XX
 )
