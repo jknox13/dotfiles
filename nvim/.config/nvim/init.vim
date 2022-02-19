@@ -28,7 +28,7 @@ Plug 'ryanoasis/vim-devicons'
 
 " LSP
 " -------------------------
-Plug 'jknox13/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/lsp-status.nvim'
 
