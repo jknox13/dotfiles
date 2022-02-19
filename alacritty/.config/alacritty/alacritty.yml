@@ -9,7 +9,7 @@ scrolling:
 font:
     normal:
       family: Hack Nerd Font Mono
-    size: 13
+    size: 12
 
 schemes:
   # Base16 Tomorrow 256 - alacritty color config
