@@ -38,3 +38,7 @@ stow kmonad
 # systemctl --user enable kmonad.service
 
 # TODO check keyboard is correct
+
+# ==============    hosts    ==============
+# block ads, malware & porn
+# curl -L https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts /etc/hosts
