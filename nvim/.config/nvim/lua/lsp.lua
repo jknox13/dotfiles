@@ -26,7 +26,7 @@ local on_attach = function(client)
     vim.opt_local.signcolumn = 'yes:1'
 end
 
-local servers = { 'bashls', 'flow', 'pylsp' }
+local servers = { 'bashls', 'pylsp' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
