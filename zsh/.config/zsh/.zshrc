@@ -51,6 +51,9 @@ export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated__'
 
+# my binaries
+export PATH=$HOME/.local/bin:$PATH
+
 # -----------------------------------------------------------------------------
 # Alias
 # -----------------------------------------------------------------------------
