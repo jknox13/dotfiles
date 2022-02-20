@@ -6,6 +6,7 @@
 # npm for lsp
 # dnf install npm
 # npm install -g bash-language-server
+# pip install --user "python-lsp-server[all]"
 
 stow nvim
 # check if installed

@@ -52,7 +52,7 @@ export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated__'
 
 # my binaries
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
 
 # npm
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
@@ -62,6 +62,10 @@ export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 NPM_PACKAGES="$XDG_DATA_HOME/npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin"
 export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
+
+# pip
+export PYTHONUSERBASE="$XDG_DATA_HOME/pip-packages"
+export PATH="$PATH:$PYTHONUSERBASE/bin"
 
 # -----------------------------------------------------------------------------
 # Alias
