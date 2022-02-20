@@ -2,6 +2,17 @@
 
 # WIP script for installing dotfiles to new machine.
 
+# ==============     zsh      ==============
+# antigen
+curl -L git.io/antigen > "$XDG_DATA_HOME/zsh/antigen.zsh"
+stow zsh
+
+# ==============     tmux     ==============
+# tmux-yank
+# dnf install xsel
+git clone https://github.com/tmux-plugins/tmux-yank "$XDG_DATA_HOME/tmux/"
+stow zsh
+
 # ==============     nvim     ==============
 # npm for lsp
 # dnf install npm
