@@ -1,0 +1,5 @@
+[user]
+	email = jknox@elltel.net
+	name  = Joe Knox
+[credential]
+	helper = gnome-keyring
