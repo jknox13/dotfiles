@@ -11,10 +11,7 @@
 # FB
 # -----------------------------------------------------------------------------
 fb_config="$HOME/.config/zsh/fb.zsh"
-if [ -f "$fb_config" ]
-then
-    source "$fb_config"
-fi
+[[ -f "$fb_config" ]] && source "$fb_config"
 
 # -----------------------------------------------------------------------------
 # Antigen
@@ -41,8 +38,8 @@ antigen apply
 # -----------------------------------------------------------------------------
 # ENV variables
 # -----------------------------------------------------------------------------
-export BROWSER="$(if [[ -n "$DISPLAY" ]]; then echo 'firefox'; else echo 'links'; fi)"
-export EDITOR="$(if [[ -n $DISPLAY ]]; then echo 'nvim'; else echo 'vi'; fi)"
+export BROWSER="$([ -n "$DISPLAY" ] && echo 'firefox' || echo 'links')"
+export EDITOR="$([ -n $DISPLAY ] && echo 'nvim' || echo 'vi')"
 export HISTFILE="$HOME/.zsh_history"
 export HISTFILESIZE=130000
 export SAVEHIST=130000
