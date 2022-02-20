@@ -3,6 +3,10 @@
 # WIP script for installing dotfiles to new machine.
 
 # ==============     nvim     ==============
+# npm for lsp
+# dnf install npm
+# npm install -g bash-language-server
+
 stow nvim
 # check if installed
 # install plugins

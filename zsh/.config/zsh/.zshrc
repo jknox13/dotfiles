@@ -52,7 +52,12 @@ export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated__'
 
 # my binaries
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
+
+# npm
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 
 # -----------------------------------------------------------------------------
 # Alias
