@@ -42,3 +42,24 @@ stow kmonad
 # ==============    hosts    ==============
 # block ads, malware & porn
 # curl -L https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts /etc/hosts
+
+# =============    moonlander/ergodox keyboard ============
+# https://github.com/zsa/wally/wiki/Linux-install
+
+# install deps
+# yum install gtk3 webkit2gtk3 libusb
+
+# set udev rules
+# cp system/50-wally.rules /etc/udev/rules.d
+
+# add to groups
+# groupadd plugdev
+# usermod -aG plugdev $USER
+
+# get latest binary
+# curl -L https://configure.ergodox-ez.com/wally/linux > "/usr/local/bin"
+# cmod +x /usr/local/bin/wally
+
+# =============  Gnome   =============
+gsettings set org.gnome.desktop.interface gtk-key-theme 'Emacs'
+stow gtk

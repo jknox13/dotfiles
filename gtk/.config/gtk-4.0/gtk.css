@@ -1,0 +1,12 @@
+@binding-set gtk-super-cut-copy-paste
+{
+        bind "<Super>x" { "cut-clipboard" () };
+        bind "<Super>c" { "copy-clipboard" () };
+        bind "<Super>v" { "paste-clipboard" () };
+        bind "<Super>a" { "select-all" (1) };
+        bind "<Super>z" { "undo" () };
+}
+
+* {
+        -gtk-key-bindings: gtk-super-cut-copy-paste
+}
