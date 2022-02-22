@@ -61,5 +61,10 @@ stow kmonad
 # cmod +x /usr/local/bin/wally
 
 # =============  Gnome   =============
-gsettings set org.gnome.desktop.interface gtk-key-theme 'Emacs'
 stow gtk
+
+# remove overloaded shell bindings (use meta-based bindings from gtk)
+# todo: look into fully custom bindings https://blog.programster.org/using-the-cli-to-set-custom-keyboard-shortcuts
+gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+gsettings set org.gnome.shell.keybindings toggle-application-view "[]"
+gsettings set org.gnome.shell.keybindings toggle-message-tray "['<Super>m']"
