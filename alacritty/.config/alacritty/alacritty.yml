@@ -11,6 +11,10 @@ font:
       family: Hack Nerd Font Mono
     size: 12
 
+key_bindings:
+  - { key: V,              mods: Super,                    action: Paste  }
+  - { key: C,              mods: Super,                    action: Copy   }
+
 schemes:
   # Base16 Tomorrow 256 - alacritty color config
   # Chris Kempson (http://chriskempson.com)
