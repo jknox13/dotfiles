@@ -25,10 +25,13 @@ _    _    _    _    _    _    _    _    _    _    _    _    _    _    _   _   _
   ctlspc  (tap-hold-next-release 150 spc lctl)
 
   aS      (tap-hold-next-release 150 a lshift)
+
   rLn     (tap-hold-next-release 150 r @lt-num)
   sLd     (tap-hold-next-release 150 s @lt-dir)
   tLs     (tap-hold-next-release 150 t @lt-sym)
   nLs     (tap-hold-next-release 150 n @lt-sym)
+  iLn     (tap-hold-next-release 150 i @lt-num)
+
   oS      (tap-hold-next-release 150 o rshift)
 )
 
@@ -46,7 +49,7 @@ esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home end  ins  
 esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  home end  ins  del
   XX   1    2    3    4    5    6    7    8    9    0    XX   XX    XX
   tab  q    w    f    p    b    j    l    u    y    ;    bspc XX    XX
-  esc  @aS  @rLn @sLd @tLs g    m    @nLs e    i    @oS  ret        XX
+  esc  @aS  @rLn @sLd @tLs g    m    @nLs e    @iLn @oS  ret        XX
   z    x    c    d    v    XX   k    h    ,    .    /               XX
   wkup lctl lalt lmet         @ctlspc     ralt sys rctl        pgdn up   pgup
                                                                left down rght
@@ -65,9 +68,9 @@ XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   
 (deflayer directional
 XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
-  XX   XX     XX   XX   XX   XX   XX   home pgup pgdn end  XX   XX   XX
+  XX   XX     XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   lshift XX   XX   XX   XX   XX   left down up   rght XX        XX
-  XX   XX     XX   XX   XX   XX   XX   XX   XX   XX   XX             XX
+  XX   XX     XX   XX   XX   XX   XX   home pgup pgdn end             XX
   _    _    _    _            _           _    _    _          XX  XX  XX
                                                                XX  XX  XX
 )
@@ -75,9 +78,9 @@ XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   
 (deflayer numpad
 XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
-  XX   XX   XX   XX   XX   XX   *    7    8    9    =    XX   XX   XX
-  XX   XX   XX   XX   XX   XX   +    4    5    6    0    XX        XX
-  XX   XX   XX   XX   XX   XX   -    1    2    3    _              XX
+  XX   XX   7    8    9    XX   XX   7    8    9    XX   XX   XX   XX
+  XX   0    4    5    6    XX   XX   4    5    6    0    XX        XX
+  XX   1    2    3    XX   XX   XX   1    2    3    _              XX
   _    _    _    _            _           _    _    _          XX  XX  XX
                                                                XX  XX  XX
 )
