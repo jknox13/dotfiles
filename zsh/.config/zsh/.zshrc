@@ -82,9 +82,8 @@ zstyle ':completion:*' special-dirs false
 # Mac OSX path
 # -----------------------------------------------------------------------------
 # TODO: define better MacOSX check
-cellar="/usr/local/Cellar"
-if [ -e "$cellar" ]
-then
+if [[ "$OSTYPE" = darwin* ]]; then
+    local cellar="/usr/local/Cellar"
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
     export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
