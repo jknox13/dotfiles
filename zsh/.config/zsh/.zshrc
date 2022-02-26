@@ -10,13 +10,13 @@
 # -----------------------------------------------------------------------------
 # FB
 # -----------------------------------------------------------------------------
-fb_config="$HOME/.config/zsh/fb.zsh"
+fb_config="$XDG_CONFIG_HOME/zsh/fb.zsh"
 [[ -f "$fb_config" ]] && source "$fb_config"
 
 # -----------------------------------------------------------------------------
 # Antigen
 # -----------------------------------------------------------------------------
-source "$HOME/.local/share/zsh/antigen.zsh"
+source "$XDG_DATA_HOME/zsh/antigen.zsh"
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
