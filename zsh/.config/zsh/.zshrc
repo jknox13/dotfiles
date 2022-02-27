@@ -11,12 +11,21 @@
 # Antigen
 # -----------------------------------------------------------------------------
 source "$XDG_DATA_HOME/zsh/antigen.zsh"
-antigen bundle zsh-users/zsh-autosuggestions
+#antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
+#antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle sindresorhus/pure@main
 antigen apply
+
+# -----------------------------------------------------------------------------
+# Cycle through history with up/down
+# -----------------------------------------------------------------------------
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
 
 # -----------------------------------------------------------------------------
 # FB
