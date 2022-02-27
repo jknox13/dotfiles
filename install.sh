@@ -69,3 +69,6 @@ gsettings set org.gnome.desktop.interface gtk-theme "Arc-Dark"
 gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
 gsettings set org.gnome.shell.keybindings toggle-application-view "[]"
 gsettings set org.gnome.shell.keybindings toggle-message-tray "['<Super>m']"
+
+# ============== utils  =============
+# dnf install fd-find bat
