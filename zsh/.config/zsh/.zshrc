@@ -11,22 +11,11 @@
 # Antigen
 # -----------------------------------------------------------------------------
 source "$XDG_DATA_HOME/zsh/antigen.zsh"
-
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
-
-# Bundles from the default repo (robbyrussell's oh-my-zsh).
-antigen bundle command-not-found
-antigen bundle vi-mode
-
-# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Load sindresorhus pure prompt
 antigen bundle sindresorhus/pure@main
-
-# Tell Antigen that you're done.
 antigen apply
 
 # -----------------------------------------------------------------------------
@@ -59,7 +48,7 @@ export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 
-NPM_PACKAGES="$XDG_DATA_HOME/npm-packages"
+local NPM_PACKAGES="$XDG_DATA_HOME/npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin"
 export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 
@@ -82,9 +71,8 @@ zstyle ':completion:*' special-dirs false
 # Mac OSX path
 # -----------------------------------------------------------------------------
 # TODO: define better MacOSX check
-cellar="/usr/local/Cellar"
-if [ -e "$cellar" ]
-then
+if [[ "$OSTYPE" = darwin* ]]; then
+    local cellar="/usr/local/Cellar"
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
     export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
