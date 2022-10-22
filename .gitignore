@@ -1,7 +1,8 @@
 *.netrwhist
-*.zwc
 *.zcompdump
+*.zwc
 nvim/.config/nvim/plugin/fb.vim
+nvim/.config/nvim/after/
 zsh/.config/zsh/fb.zsh
 zsh/.local/share/atigen/
 zsh/.config/zsh/.zcompdump
