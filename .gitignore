@@ -3,7 +3,7 @@
 *.zwc
 *.uuid
 nvim/.config/nvim/plugin/fb.vim
-nvim/.config/nvim/after/
+nvim/.config/nvim/after
 zsh/.config/zsh/fb.zsh
-zsh/.local/share/atigen/
+zsh/.local/share/zsh/antigen
 zsh/.config/zsh/.zcompdump
