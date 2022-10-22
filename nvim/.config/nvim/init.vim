@@ -19,6 +19,10 @@ if empty(glob(plug_path))
 endif
 call plug#begin(stdpath('data') . '/plugged')
 
+" General
+" -------------------------
+Plug 'nvim-lua/plenary.nvim'
+
 " Appearance
 " -------------------------
 Plug 'ayu-theme/ayu-vim'
@@ -31,15 +35,17 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 " Plug 'nvim-lua/lsp-status.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim', {'branch': 'main'}
 
 " Treesitter
 " -------------------------
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', {'branch': 'v0.8.0', 'do': ':TSUpdate'}
 
 " Navigation
 " -------------------------
 Plug 'junegunn/fzf', {'do': { -> fzf#install()}}
 Plug 'junegunn/fzf.vim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'unblevable/quick-scope'
 
 " tpope is a rockstar
@@ -85,7 +91,7 @@ filetype plugin indent on
 
 set number
 set relativenumber
-setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 set smartindent
 set noswapfile
 set nohlsearch
@@ -173,3 +179,15 @@ cmap <C-e> <end>
 " -----------------------------------------------------------------------------
 lua require('lsp')
 lua require('treesitter')
+
+" -----------------------------------------------------------------------------
+" TODOs
+" -----
+" - (fzf) Paste buffer content into fzf
+" - (fzf) Filter out `.hg/origbackup` files
+" - (treesitter/fmt) single mapping to format files (dynamic for php, js)
+" - (treesitter/ft) js, php files should have ts=2 sw=2 expandtab
+" - (lsp) fuzzy complete
+" - (ftplugin) go -- set tw=4 sw=4 expandtab=0
+"
+" -----------------------------------------------------------------------------

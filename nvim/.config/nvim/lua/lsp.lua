@@ -7,6 +7,10 @@ local on_attach = function(client)
     completion.on_attach(client)
 
     -- Mappings.
+	vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+	vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+	vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+
     vim.api.nvim_set_keymap('n', '<leader>vca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<leader>vd',  '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<leader>vh',  '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -26,7 +30,7 @@ local on_attach = function(client)
     vim.opt_local.signcolumn = 'yes:1'
 end
 
-local servers = { 'bashls', 'pylsp' }
+local servers = { 'bashls' }  --, 'pylsp' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
