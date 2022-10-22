@@ -1,6 +1,7 @@
 *.netrwhist
 *.zcompdump
 *.zwc
+*.uuid
 nvim/.config/nvim/plugin/fb.vim
 nvim/.config/nvim/after/
 zsh/.config/zsh/fb.zsh
