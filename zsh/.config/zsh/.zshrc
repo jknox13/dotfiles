@@ -10,6 +10,7 @@
 # -----------------------------------------------------------------------------
 # Antigen
 # -----------------------------------------------------------------------------
+export ADOTDIR="$XDG_DATA_HOME/zsh/antigen"
 source "$XDG_DATA_HOME/zsh/antigen.zsh"
 #antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
@@ -47,6 +48,7 @@ export VISUAL=nvim
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 
 # fzf
+# TODO -- update to ignore hgoriginal https://github.com/junegunn/fzf.vim/issues/453#issuecomment-767427765
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated__'
 
 # my binaries
@@ -65,10 +67,14 @@ export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 export PYTHONUSERBASE="$XDG_DATA_HOME/pip-packages"
 export PATH="$PATH:$PYTHONUSERBASE/bin"
 
+# rust cargo
+export PATH="$PATH:$HOME/.cargo/env"
+
 # -----------------------------------------------------------------------------
 # Alias
 # -----------------------------------------------------------------------------
 alias vim=nvim
+alias hgrep='history 0 | grep'
 
 # -----------------------------------------------------------------------------
 # Completion opts
