@@ -11,6 +11,8 @@
 # Antigen
 # -----------------------------------------------------------------------------
 export ADOTDIR="$XDG_DATA_HOME/zsh/antigen"
+export ANTIGEN_CACHE=false  # hack to get new path to work
+
 source "$XDG_DATA_HOME/zsh/antigen.zsh"
 #antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions

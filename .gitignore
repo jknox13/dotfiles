@@ -5,5 +5,5 @@
 nvim/.config/nvim/plugin/fb.vim
 nvim/.config/nvim/after
 zsh/.config/zsh/fb.zsh
-zsh/.local/share/zsh/antigen
 zsh/.config/zsh/.zcompdump
+zsh/.local/share/zsh/antigen
