@@ -1,9 +1,10 @@
 *.netrwhist
+*.sw[p,o]
+*.uuid
 *.zsh_history
 *.zsh_sessions
 *.zcompdump
 *.zwc
-*.uuid
 karabiner/.config/karabiner/automatic_backups
 nvim/.config/nvim/plugin/fb.vim
 nvim/.config/nvim/after

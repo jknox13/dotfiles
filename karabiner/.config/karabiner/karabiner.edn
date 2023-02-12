@@ -7,6 +7,9 @@
         :symbols_right  {:key :f}
         :direction      {:key :d}
         :numpad         {:key :s}
+        ;; accent keys
+        :accents_right  {:key :c}
+        :accents_left   {:key :m}
     }
     :profiles {
     :Default {
@@ -44,7 +47,7 @@
         {
             :des "Symbol layer (from home row pointers)"
             :rules [
-                [:##q           :vk_none                    :symbols_left]
+                [:##q           :!O3                        :symbols_left]
                 [:##w           :!Sopen_bracket             :symbols_left]
                 [:##e           :!Sclose_bracket            :symbols_left]
                 [:##r           :!S4                        :symbols_left]
@@ -54,7 +57,7 @@
                 [:##d           :!S0                        :symbols_left]
                 [:##f           :quote                      :symbols_left]
                 [:##g           :grave_accent_and_tilde     :symbols_left]
-                [:##left_shift  :vk_none                    :symbols_left]
+                [:##left_shift  :!OS2                       :symbols_left]
                 [:##z           :open_bracket               :symbols_left]
                 [:##x           :close_bracket              :symbols_left]
                 [:##c           :!Squote                    :symbols_left]
@@ -112,6 +115,20 @@
                 [:##m           :keypad_1                   :numpad]
                 [:##comma       :keypad_2                   :numpad]
                 [:##period      :keypad_3                   :numpad]
+              ]
+          }
+        {
+            :des "Accents"
+            :rules [
+                [:##a           :!Oq                        :accents_left]
+                [:##d           :!Oc                        :accents_left]
+                [:##left_shift  :!OSq                       :accents_left]
+                [:##x           :!OSc                       :accents_left]
+                [:##i           :!Ou                        :accents_right]
+                [:##h           :!On                        :accents_right]
+                [:##j           :!Ograve_accent_and_tilde   :accents_right]
+                [:##k           :!Oe                        :accents_right]
+                [:##l           :!Oi                        :accents_right]
               ]
           }
         ;; Must be after layers
