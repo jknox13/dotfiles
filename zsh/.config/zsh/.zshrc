@@ -89,10 +89,12 @@ zstyle ':completion:*' special-dirs false
 # -----------------------------------------------------------------------------
 # TODO: define better MacOSX check
 if [[ "$OSTYPE" = darwin* ]]; then
-    local cellar="/usr/local/Cellar"
-    export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
-    export PATH=$HOME/bin:$PATH
-    export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
+    #local cellar="/usr/local/Cellar"
+    #export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
+    #export PATH=$HOME/bin:$PATH
+    #export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
+    local homebrew="$HOME/homebrew"
+    export PATH="$homebrew/bin:$homebrew/sbin:$PATH"
 
     export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 fi
