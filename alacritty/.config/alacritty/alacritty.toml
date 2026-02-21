@@ -1,0 +1,78 @@
+[general]
+live_config_reload = true
+
+[scrolling]
+history = 10000
+
+[font]
+size = 12
+
+[font.normal]
+family = "Hack Nerd Font Mono"
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+# Base16 Tomorrow Night 256
+# Chris Kempson (http://chriskempson.com)
+[colors.primary]
+background = "#1d1f21"
+foreground = "#c5c8c6"
+
+[colors.cursor]
+text = "#1d1f21"
+cursor = "#c5c8c6"
+
+[colors.normal]
+black   = "#1d1f21"
+red     = "#cc6666"
+green   = "#b5bd68"
+yellow  = "#f0c674"
+blue    = "#81a2be"
+magenta = "#b294bb"
+cyan    = "#8abeb7"
+white   = "#c5c8c6"
+
+[colors.bright]
+black   = "#969896"
+red     = "#cc6666"
+green   = "#b5bd68"
+yellow  = "#f0c674"
+blue    = "#81a2be"
+magenta = "#b294bb"
+cyan    = "#8abeb7"
+white   = "#ffffff"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#de935f"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#a3685a"
+
+[[colors.indexed_colors]]
+index = 18
+color = "#282a2e"
+
+[[colors.indexed_colors]]
+index = 19
+color = "#373b41"
+
+[[colors.indexed_colors]]
+index = 20
+color = "#b4b7b4"
+
+[[colors.indexed_colors]]
+index = 21
+color = "#e0e0e0"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Super"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Super"
+action = "Copy"
