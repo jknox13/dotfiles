@@ -1,0 +1,87 @@
+# ---------- prompt ----------
+
+# Walk up to find .hg without spawning hg (avoids Python startup cost)
+__find_hg_root() {
+    local dir=$PWD
+    while [ "$dir" != "/" ]; do
+        if [ -d "$dir/.hg" ]; then
+            echo "$dir"
+            return 0
+        fi
+        dir=${dir%/*}
+        [ -z "$dir" ] && dir=/
+    done
+    return 1
+}
+
+__prompt_dir() {
+    local toplevel
+    toplevel=$(git rev-parse --show-toplevel 2>/dev/null) \
+        || toplevel=$(__find_hg_root) \
+        || { echo '\w'; return; }
+    local prefix=${toplevel%/*}/
+    echo "${PWD#"$prefix"}"
+}
+
+__prompt_vcs() {
+    local bp='\[\e[1;35m\]'
+    local bg='\[\e[1;32m\]'
+    local rs='\[\e[0m\]'
+
+    # git
+    local branch sha
+    if branch=$(git symbolic-ref --short HEAD 2>/dev/null); then
+        printf ' on %s%s%s' "$bp" "$branch" "$rs"
+        return
+    elif sha=$(git rev-parse --short HEAD 2>/dev/null); then
+        printf ' on %sHEAD%s %s(%s)%s' "$bp" "$rs" "$bg" "$sha" "$rs"
+        return
+    fi
+
+    # mercurial (only if we're in an hg repo)
+    local hg_root
+    hg_root=$(__find_hg_root) || return
+    local bookmark node
+    # Read active bookmark directly from file (no Python startup)
+    [ -f "$hg_root/.hg/bookmarks.current" ] && bookmark=$(< "$hg_root/.hg/bookmarks.current")
+    # Read node from dirstate: first 20 bytes are the binary parent hash
+    node=$(xxd -l 20 -p "$hg_root/.hg/dirstate" 2>/dev/null | head -c 12)
+    if [ -n "$bookmark" ]; then
+        printf ' on %s%s%s %s(%s)%s' "$bp" "$bookmark" "$rs" "$bg" "$node" "$rs"
+    elif [ -n "$node" ]; then
+        printf ' at %s%s%s' "$bg" "$node" "$rs"
+    fi
+}
+
+__prompt_cmd() {
+    local exit_code=$?
+    local bold_red='\[\e[1;31m\]'
+    local bold_green='\[\e[1;32m\]'
+    local bold_yellow='\[\e[1;33m\]'
+    local bold_cyan='\[\e[1;36m\]'
+    local reset='\[\e[0m\]'
+
+    local chevron_color
+    if [ "$exit_code" -eq 0 ]; then
+        chevron_color=$bold_green
+    else
+        chevron_color=$bold_red
+    fi
+
+    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${chevron_color}❯${reset} "
+}
+
+PROMPT_COMMAND=__prompt_cmd
+
+# ---------- aliases ----------
+
+alias ls='ls --color'
+
+# ---------- completion ----------
+
+bind 'set show-all-if-ambiguous on'
+bind 'set colored-stats on'
+bind 'set colored-completion-prefix on'
+bind 'set menu-complete-display-prefix on'
+bind 'TAB: menu-complete'
+bind '"\e[Z": menu-complete-backward'
