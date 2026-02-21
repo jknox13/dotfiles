@@ -49,6 +49,14 @@ __prompt_git_status() {
     git diff --quiet 2>/dev/null || indicators+="%F{red}*%f"
     git diff --cached --quiet 2>/dev/null || indicators+="%F{green}+%f"
     [ -n "$(git ls-files --others --exclude-standard --directory --no-empty-directory 2>/dev/null | head -1)" ] && indicators+="%F{blue}?%f"
+
+    local lr
+    if lr=$(git rev-list --left-right --count HEAD...@{u} 2>/dev/null); then
+        local ahead=${lr%%	*} behind=${lr##*	}
+        (( ahead > 0 )) && indicators+="%F{cyan}↑${ahead}%f"
+        (( behind > 0 )) && indicators+="%F{cyan}↓${behind}%f"
+    fi
+
     [ -n "$indicators" ] && print -n " $indicators"
 }
 
