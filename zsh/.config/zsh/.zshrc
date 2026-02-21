@@ -131,123 +131,6 @@ precmd() {
 PROMPT=$'\n''%B%F{yellow}%n@%m%f%b in %B%F{cyan}$(__prompt_dir)%f%b${__prompt_vcs}'$'\n''${__prompt_chevron} '
 
 # -----------------------------------------------------------------------------
-# Prompt
-# -----------------------------------------------------------------------------
-setopt PROMPT_SUBST
-
-typeset -g __prompt_vcs=""
-typeset -g __prompt_async_fd=""
-
-# Walk up to find .hg without spawning hg (avoids Python startup cost)
-__find_hg_root() {
-    local dir=$PWD
-    while [ "$dir" != "/" ]; do
-        if [ -d "$dir/.hg" ]; then
-            echo "$dir"
-            return 0
-        fi
-        dir=${dir%/*}
-        [ -z "$dir" ] && dir=/
-    done
-    return 1
-}
-
-__prompt_dir() {
-    local toplevel
-    toplevel=$(git rev-parse --show-toplevel 2>/dev/null) \
-        || toplevel=$(__find_hg_root) \
-        || { print -n '%~'; return; }
-    local prefix=${toplevel%/*}/
-    print -n "${PWD#$prefix}"
-}
-
-__prompt_git_status() {
-    local indicators=""
-    git diff --quiet 2>/dev/null || indicators+="%F{red}*%f"
-    git diff --cached --quiet 2>/dev/null || indicators+="%F{green}+%f"
-    [ -n "$(git ls-files --others --exclude-standard --directory --no-empty-directory 2>/dev/null | head -1)" ] && indicators+="%F{blue}?%f"
-    [ -n "$indicators" ] && print -n " $indicators"
-}
-
-__prompt_vcs_info() {
-    # git
-    local branch sha
-    if branch=$(git symbolic-ref --short HEAD 2>/dev/null); then
-        print -n " on %B%F{magenta}${branch}%f%b"
-        __prompt_git_status
-        print
-        return
-    elif sha=$(git rev-parse --short HEAD 2>/dev/null); then
-        print -n " on %B%F{magenta}HEAD%f%b %B%F{green}(${sha})%f%b"
-        __prompt_git_status
-        print
-        return
-    fi
-
-    # mercurial
-    local hg_root
-    hg_root=$(__find_hg_root) || return
-    local bookmark="" node=""
-    [ -f "$hg_root/.hg/bookmarks.current" ] && bookmark=$(< "$hg_root/.hg/bookmarks.current")
-    node=$(xxd -l 20 -p "$hg_root/.hg/dirstate" 2>/dev/null | head -c 12)
-
-    local hg_status indicators=""
-    hg_status=$(hg status 2>/dev/null)
-    print -r -- "$hg_status" | grep -q '^[M\!]' && indicators+="%F{red}*%f"
-    print -r -- "$hg_status" | grep -q '^A' && indicators+="%F{green}+%f"
-    print -r -- "$hg_status" | grep -q '^\?' && indicators+="%F{blue}?%f"
-
-    if [ -n "$bookmark" ]; then
-        print -n " on %B%F{magenta}${bookmark}%f%b %B%F{green}(${node})%f%b"
-    elif [ -n "$node" ]; then
-        print -n " at %B%F{green}${node}%f%b"
-    fi
-    [ -n "$indicators" ] && print -n " $indicators"
-    print
-}
-
-__prompt_async_callback() {
-    local fd=$1
-    local vcs_info
-    if IFS= read -r -u $fd vcs_info 2>/dev/null; then
-        __prompt_vcs="$vcs_info"
-    fi
-    zle -F $fd
-    exec {fd}<&-
-    __prompt_async_fd=""
-    zle && zle reset-prompt
-}
-
-__prompt_async_start() {
-    # Clean up previous async process
-    if [[ -n "$__prompt_async_fd" ]]; then
-        zle -F $__prompt_async_fd 2>/dev/null
-        exec {__prompt_async_fd}<&- 2>/dev/null
-    fi
-
-    __prompt_vcs=""
-
-    local fd
-    exec {fd}< <(__prompt_vcs_info)
-    __prompt_async_fd=$fd
-    zle -F $fd __prompt_async_callback
-}
-
-precmd() {
-    local exit_code=$?
-
-    if [ "$exit_code" -eq 0 ]; then
-        __prompt_chevron="%B%F{green}❯%f%b"
-    else
-        __prompt_chevron="%B%F{red}❯%f%b"
-    fi
-
-    __prompt_async_start
-}
-
-PROMPT=$'\n''%B%F{yellow}%n@%m%f%b in %B%F{cyan}$(__prompt_dir)%f%b${__prompt_vcs}'$'\n''${__prompt_chevron} '
-
-# -----------------------------------------------------------------------------
 # Key bindings
 # -----------------------------------------------------------------------------
 # Force emacs mode (EDITOR=vi causes zsh to default to vi bindings)
@@ -282,6 +165,7 @@ alias hgrep='history 0 | grep'
 # -----------------------------------------------------------------------------
 # Completion opts
 # -----------------------------------------------------------------------------
+autoload -Uz compinit && compinit -d "$ZSH_COMPDUMP"
 # Remove . & .. from completions
 zstyle ':completion:*' special-dirs false
 # Color completions using LS_COLORS
