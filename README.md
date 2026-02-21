@@ -48,6 +48,15 @@ user@hostname in directory on branch
 - Mercurial: shows active bookmark with short node, read directly from `.hg/dirstate` and `.hg/bookmarks.current` (no Python startup)
 - Zsh computes VCS info asynchronously via `zle -F`; zsh also shows dirty (`*`), staged (`+`), and untracked (`?`) indicators
 
+## Tmux
+
+Vi-style keybindings for pane navigation (`h/j/k/l`) and splitting (`v`/`s`). Mouse and system clipboard support via `xclip`. Status bar shows session name, user, host, and time. Windows and panes are numbered from 1.
+
+Key bindings:
+- `prefix a` -- list sessions
+- `prefix v` / `prefix s` -- split horizontal / vertical
+- `prefix R` -- reload config
+
 ## Arch Linux instructions
 ### Caps to ctrl & esc
 1. install [`xcape`](https://archlinux.org/packages/community/x86_64/xcape)
