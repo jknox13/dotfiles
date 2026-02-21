@@ -1,0 +1,4 @@
+alias ls='ls --color'
+
+# nvim: /lib64/libm.so.6: version `GLIBC_2.29' not found (required by nvim)
+alias nvim="$HOME/bin/nvim95"
