@@ -7,6 +7,7 @@ Uses `stow` to manage symlinks.
 | --------- 	| --------- 	| --------- 	|
 | X		| [x]		|	    	|
 | alacritty	| [x]		| [x]		|
+| bash		| [x]		| [x]		|
 | feh		| [x]		|   		|
 | fonts		| [x]		|   		|
 | homebrew	| 		| [x]		|
@@ -15,8 +16,37 @@ Uses `stow` to manage symlinks.
 | neofetch	| [x]		| [x]		|
 | nvim		| [x]		| [x]		|
 | polybar	| [x]		|   		|
+| shell		| [x]		| [x]		|
 | tmux		| [x]		| [x]		|
 | zsh		| [x]		| [x]		|
+
+## Shell setup
+
+Three stow packages provide shell configuration:
+
+- **`shell`** -- shared exports and aliases sourced by both bash and zsh
+- **`bash`** -- bash-specific prompt, completion settings, and `.bash_profile`/`.bashrc` shims
+- **`zsh`** -- zsh-specific prompt (async), completion, history, and key bindings
+
+```
+stow shell bash zsh
+```
+
+### Prompt
+
+Both shells use the same two-line prompt style:
+
+```
+user@hostname in directory on branch
+❯
+```
+
+- `user@hostname` bold yellow, `directory` bold cyan, `branch` bold magenta
+- `❯` bold green (exit 0) or bold red (non-zero)
+- Directory is trimmed to the repo root inside git/hg repositories
+- Git: shows branch name, or `HEAD (sha)` when detached
+- Mercurial: shows active bookmark with short node, read directly from `.hg/dirstate` and `.hg/bookmarks.current` (no Python startup)
+- Zsh computes VCS info asynchronously via `zle -F`; zsh also shows dirty (`*`), staged (`+`), and untracked (`?`) indicators
 
 ## Arch Linux instructions
 ### Caps to ctrl & esc
