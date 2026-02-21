@@ -147,9 +147,12 @@ fb_config="$XDG_CONFIG_HOME/zsh/fb.zsh"
 # -----------------------------------------------------------------------------
 # ENV variables
 # -----------------------------------------------------------------------------
+[[ -d "$XDG_DATA_HOME/zsh" ]] || mkdir -p "$XDG_DATA_HOME/zsh"
 export HISTFILE="$XDG_DATA_HOME/zsh/history"
 export HISTFILESIZE=130000
 export SAVEHIST=130000
+
+[[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
 
 # -----------------------------------------------------------------------------

@@ -4,6 +4,10 @@ source "$XDG_CONFIG_HOME/shell/exports"
 source "$XDG_CONFIG_HOME/shell/aliases"
 source "$XDG_CONFIG_HOME/shell/vcs"
 
+# ---------- local config ----------
+
+[ -f "$XDG_CONFIG_HOME/bash/fb.bash" ] && . "$XDG_CONFIG_HOME/bash/fb.bash"
+
 # ---------- prompt ----------
 
 __prompt_dir() {
