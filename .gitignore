@@ -6,4 +6,6 @@ nvim/.config/nvim/plugin/fb.vim
 nvim/.config/nvim/after
 zsh/.config/zsh/fb.zsh
 bash/.config/bash/fb.bash
+shell/.config/shell/fb.aliases
+tmux/.config/tmux/fb.tmux.conf
 zsh/.config/zsh/.zcompdump
