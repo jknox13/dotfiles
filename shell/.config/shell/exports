@@ -1,6 +1,5 @@
 export BROWSER="$([ -n "$DISPLAY" ] && echo 'firefox' || echo 'links')"
 export EDITOR=vi
-export TERM=xterm-256color
 export TMPDIR="/var/tmp"
 export VISUAL=vi
 
@@ -13,7 +12,7 @@ export PATH="$PATH:$HOME/.local/bin"
 # npm
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
-export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
+[ -n "$XDG_RUNTIME_DIR" ] && export NPM_CONFIG_TMP="$XDG_RUNTIME_DIR/npm"
 
 NPM_PACKAGES="$XDG_DATA_HOME/npm-packages"
 export PATH="$PATH:$NPM_PACKAGES/bin"
@@ -24,4 +23,4 @@ export PYTHONUSERBASE="$XDG_DATA_HOME/pip-packages"
 export PATH="$PATH:$PYTHONUSERBASE/bin"
 
 # rust cargo
-export PATH="$PATH:$HOME/.cargo/env"
+export PATH="$PATH:$HOME/.cargo/bin"

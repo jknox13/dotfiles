@@ -12,6 +12,7 @@
 # -----------------------------------------------------------------------------
 source "$XDG_CONFIG_HOME/shell/exports"
 source "$XDG_CONFIG_HOME/shell/aliases"
+source "$XDG_CONFIG_HOME/shell/vcs"
 
 # -----------------------------------------------------------------------------
 # Prompt
@@ -20,20 +21,6 @@ setopt PROMPT_SUBST
 
 typeset -g __prompt_vcs=""
 typeset -g __prompt_async_fd=""
-
-# Walk up to find .hg without spawning hg (avoids Python startup cost)
-__find_hg_root() {
-    local dir=$PWD
-    while [ "$dir" != "/" ]; do
-        if [ -d "$dir/.hg" ]; then
-            echo "$dir"
-            return 0
-        fi
-        dir=${dir%/*}
-        [ -z "$dir" ] && dir=/
-    done
-    return 1
-}
 
 __prompt_dir() {
     local toplevel
@@ -160,7 +147,7 @@ fb_config="$XDG_CONFIG_HOME/zsh/fb.zsh"
 # -----------------------------------------------------------------------------
 # ENV variables
 # -----------------------------------------------------------------------------
-export HISTFILE="$HOME/.zsh_history"
+export HISTFILE="$XDG_DATA_HOME/zsh/history"
 export HISTFILESIZE=130000
 export SAVEHIST=130000
 export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/.zcompdump-${HOST/.*/}-${ZSH_VERSION}"
@@ -183,10 +170,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # Mac OSX path
 # -----------------------------------------------------------------------------
 if [[ "$OSTYPE" = darwin* ]]; then
-    local cellar="/usr/local/Cellar"
     export PATH=/usr/local/{bin,sbin}:$HOME/.local/bin:$PATH
     export PATH=$HOME/bin:$PATH
-    export PATH="$cellar/python@3.8/3.8.5/Frameworks/Python.framework/Versions/3.8/bin:$PATH"
 
     export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 fi
