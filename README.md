@@ -103,6 +103,14 @@ places files exactly where the shell/tool expects them. The personal repo
 `.gitignore` already excludes the `conf.d` directories, so stowed symlinks
 won't show up as untracked files.
 
+### Stow `--no-folding`
+
+The `stow` package provides a `~/.stowrc` containing `--no-folding`. This
+prevents stow from replacing real directories with a single directory symlink
+("tree folding"), which would block a second stow repo from adding symlinks
+into the same directory. Stow the `stow` package first when bootstrapping a
+new machine so all subsequent operations pick up this setting.
+
 ## Arch Linux instructions
 ### Caps to ctrl & esc
 1. install [`xcape`](https://archlinux.org/packages/community/x86_64/xcape)
