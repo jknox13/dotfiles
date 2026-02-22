@@ -15,6 +15,17 @@ source "$XDG_CONFIG_HOME/shell/aliases"
 source "$XDG_CONFIG_HOME/shell/vcs"
 
 # -----------------------------------------------------------------------------
+# Hooks
+# -----------------------------------------------------------------------------
+autoload -Uz add-zsh-hook
+
+# Set pane/terminal title to the running command name, clear on completion
+__set_title_preexec() { printf '\033]2;%s\033\\' "${1%% *}"; }
+__clear_title_precmd() { printf '\033]2;\033\\'; }
+add-zsh-hook preexec __set_title_preexec
+add-zsh-hook precmd __clear_title_precmd
+
+# -----------------------------------------------------------------------------
 # Prompt
 # -----------------------------------------------------------------------------
 setopt PROMPT_SUBST
@@ -111,7 +122,7 @@ __prompt_async_start() {
     zle -F $fd __prompt_async_callback
 }
 
-precmd() {
+__prompt_precmd() {
     local exit_code=$?
 
     if [ "$exit_code" -eq 0 ]; then
@@ -122,6 +133,7 @@ precmd() {
 
     __prompt_async_start
 }
+add-zsh-hook precmd __prompt_precmd
 
 PROMPT=$'\n''%B%F{yellow}%n@%m%f%b in %B%F{cyan}$(__prompt_dir)%f%b${__prompt_vcs}'$'\n''${__prompt_chevron} '
 
