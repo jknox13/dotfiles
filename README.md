@@ -117,6 +117,7 @@ External tools required by each stow package:
 
 | Package | Dependencies |
 |---------|-------------|
+| nvim    | A [Nerd Font](https://www.nerdfonts.com/) (for nvim-web-devicons) |
 | tmux    | [`fzf`](https://github.com/junegunn/fzf) |
 
 ## Arch Linux instructions
