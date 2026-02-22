@@ -8,6 +8,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude __generated_
 
 # my binaries
 export PATH="$PATH:$HOME/.local/bin"
+[ -d "$HOME/.local/bin/fb" ] && export PATH="$PATH:$HOME/.local/bin/fb"
 
 # npm
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/config"

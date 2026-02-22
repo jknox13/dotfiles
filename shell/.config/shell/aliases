@@ -1,4 +1,1 @@
 alias ls='ls --color=auto'
-
-# fb
-[ -f "$XDG_CONFIG_HOME/shell/fb.aliases" ] && . "$XDG_CONFIG_HOME/shell/fb.aliases"
