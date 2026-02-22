@@ -53,7 +53,7 @@ user@hostname in directory on branch
 Vi-style keybindings for pane navigation (`h/j/k/l`) and splitting (`v`/`s`). Mouse and system clipboard support via `xclip`. Status bar shows session name, user, host, and time. Windows and panes are numbered from 1.
 
 Key bindings:
-- `prefix a` -- fuzzy-search sessions (via `fzf`)
+- `prefix a` -- fuzzy-search windows (via `fzf`)
 - `prefix v` / `prefix s` -- split horizontal / vertical
 - `prefix R` -- reload config
 
