@@ -151,10 +151,9 @@ bindkey "^[[A" history-beginning-search-backward-end
 bindkey "^[[B" history-beginning-search-forward-end
 
 # -----------------------------------------------------------------------------
-# FB
+# Local extensions
 # -----------------------------------------------------------------------------
-fb_config="$XDG_CONFIG_HOME/zsh/fb.zsh"
-[[ -f "$fb_config" ]] && source "$fb_config"
+for _rc in "$XDG_CONFIG_HOME/zsh/conf.d/"*.zsh(N); do source "$_rc"; done
 
 # -----------------------------------------------------------------------------
 # ENV variables

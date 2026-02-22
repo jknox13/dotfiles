@@ -57,6 +57,52 @@ Key bindings:
 - `prefix v` / `prefix s` -- split horizontal / vertical
 - `prefix R` -- reload config
 
+## Local / work-specific extensions
+
+This repo is intentionally generic. Machine-specific or work-specific
+configuration lives in a **separate stow repo** (e.g. `~/.dotfiles-work`) and
+is loaded automatically through `conf.d` directories and conditional includes.
+
+### How it works
+
+| Tool | Extension point | Pattern |
+|------|----------------|---------|
+| zsh  | `$XDG_CONFIG_HOME/zsh/conf.d/*.zsh` | Glob with `(N)` — no error if empty |
+| bash | `$XDG_CONFIG_HOME/bash/conf.d/*.bash` | Guarded `[ -f ]` loop |
+| tmux | `$XDG_CONFIG_HOME/tmux/conf.d/*.conf` | `source-file -q` glob — silent if empty |
+| git  | `~/.gitconfig-work` (or any path) | `[include] path = ...` — no-op if missing |
+| nvim | `$XDG_CONFIG_HOME/nvim/plugin/*.vim` | Built-in `plugin/` auto-load |
+| PATH | `$HOME/.local/bin/*/` | All subdirectories added automatically |
+
+### Setting up a work stow repo
+
+```bash
+mkdir -p ~/.dotfiles-work
+cd ~/.dotfiles-work
+git init
+
+# Example: add a zsh extension
+mkdir -p zsh/.config/zsh/conf.d
+cat > zsh/.config/zsh/conf.d/work.zsh <<'SH'
+# work-specific shell config
+SH
+
+# Example: add a git include
+mkdir -p git
+cat > git/.gitconfig-work <<'INI'
+[user]
+    email = you@work.com
+INI
+
+# Stow everything into ~
+stow -t ~ zsh git
+```
+
+Each stow package mirrors the XDG directory structure so that `stow -t ~`
+places files exactly where the shell/tool expects them. The personal repo
+`.gitignore` already excludes the `conf.d` directories, so stowed symlinks
+won't show up as untracked files.
+
 ## Arch Linux instructions
 ### Caps to ctrl & esc
 1. install [`xcape`](https://archlinux.org/packages/community/x86_64/xcape)

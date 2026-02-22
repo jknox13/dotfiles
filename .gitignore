@@ -2,11 +2,8 @@
 *.zcompdump
 *.zwc
 *.uuid
-nvim/.config/nvim/plugin/fb.vim
-nvim/.config/nvim/after
-zsh/.config/zsh/fb.zsh
-bash/.config/bash/fb.bash
-shell/.config/shell/fb.aliases
-bin/.local/bin/fb
-tmux/.config/tmux/fb.tmux.conf
 zsh/.config/zsh/.zcompdump
+zsh/.config/zsh/conf.d
+bash/.config/bash/conf.d
+tmux/.config/tmux/conf.d
+nvim/.config/nvim/after

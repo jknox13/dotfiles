@@ -6,7 +6,7 @@ source "$XDG_CONFIG_HOME/shell/vcs"
 
 # ---------- local config ----------
 
-[ -f "$XDG_CONFIG_HOME/bash/fb.bash" ] && . "$XDG_CONFIG_HOME/bash/fb.bash"
+for _rc in "$XDG_CONFIG_HOME/bash/conf.d/"*.bash; do [ -f "$_rc" ] && . "$_rc"; done
 
 # ---------- prompt ----------
 
