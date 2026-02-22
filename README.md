@@ -53,7 +53,7 @@ user@hostname in directory on branch
 Vi-style keybindings for pane navigation (`h/j/k/l`) and splitting (`v`/`s`). Mouse and system clipboard support via `xclip`. Status bar shows session name, user, host, and time. Windows and panes are numbered from 1.
 
 Key bindings:
-- `prefix a` -- list sessions
+- `prefix a` -- fuzzy-search sessions (via `fzf`)
 - `prefix v` / `prefix s` -- split horizontal / vertical
 - `prefix R` -- reload config
 
@@ -110,6 +110,14 @@ prevents stow from replacing real directories with a single directory symlink
 ("tree folding"), which would block a second stow repo from adding symlinks
 into the same directory. Stow the `stow` package first when bootstrapping a
 new machine so all subsequent operations pick up this setting.
+
+## Dependencies
+
+External tools required by each stow package:
+
+| Package | Dependencies |
+|---------|-------------|
+| tmux    | [`fzf`](https://github.com/junegunn/fzf) |
 
 ## Arch Linux instructions
 ### Caps to ctrl & esc
