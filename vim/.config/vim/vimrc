@@ -1,0 +1,17 @@
+" ---------- conf.d ----------
+
+for s:rc in sort(glob($XDG_CONFIG_HOME . '/vim/conf.d/*.vim', 0, 1))
+  execute 'source' s:rc
+endfor
+
+" ---------- leader ----------
+
+let mapleader = " "
+
+" ---------- paste fix ----------
+
+" Auto-disable paste mode when leaving insert mode
+autocmd InsertLeave * set nopaste
+
+" <leader>v: enter paste-safe insert mode (paste via terminal, then Esc)
+nnoremap <leader>v :set paste<CR>i
