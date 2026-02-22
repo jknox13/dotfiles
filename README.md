@@ -72,7 +72,7 @@ is loaded automatically through `conf.d` directories and conditional includes.
 | tmux | `$XDG_CONFIG_HOME/tmux/conf.d/*.conf` | `source-file -q` glob — silent if empty |
 | git  | `~/.gitconfig-work` (or any path) | `[include] path = ...` — no-op if missing |
 | nvim | `$XDG_CONFIG_HOME/nvim/plugin/*.vim` | Built-in `plugin/` auto-load |
-| PATH | `$HOME/.local/bin/*/` | All subdirectories added automatically |
+| PATH | `$HOME/.local/bin` | Binaries from any stow repo land here |
 
 ### Setting up a work stow repo
 
