@@ -8,6 +8,11 @@ source "$XDG_CONFIG_HOME/shell/vcs"
 
 for _rc in "$XDG_CONFIG_HOME/bash/conf.d/"*.bash; do [ -f "$_rc" ] && . "$_rc"; done
 
+# ---------- history ----------
+
+[[ -d "$XDG_DATA_HOME/bash" ]] || mkdir -p "$XDG_DATA_HOME/bash"
+export HISTFILE="$XDG_DATA_HOME/bash/history"
+
 # ---------- prompt ----------
 
 __prompt_dir() {
