@@ -168,6 +168,54 @@ Key bindings:
 | `prefix s`   | Split vertical                    |
 | `prefix R`   | Reload config                     |
 
+## sshmux
+
+`sshmux` manages tmux sessions backed by remote SSH hosts. It uses
+[Eternal Terminal](https://eternalterminal.dev/) (`et`) for resilient primary
+connections and SSH ControlMaster multiplexing for fast additional pane
+connections.
+
+### Commands
+
+| Command                   | Description                                              |
+|---------------------------|----------------------------------------------------------|
+| `sshmux connect [host]`   | Connect to a host (interactive `fzf` picker if omitted)  |
+| `sshmux list`             | List sessions with ControlMaster status                  |
+| `sshmux release [--all]`  | Close ControlMaster socket and kill tmux session          |
+| `sshmux clean`            | Remove stale sessions with dead connections               |
+| `sshmux help`             | Show help including recommended tmux keybindings          |
+
+### How it works
+
+1. `sshmux connect` establishes an SSH ControlMaster socket, creates a tmux
+   session whose first window runs `et <host>`, and stores the host in the
+   tmux session environment variable `SSHMUX_HOST`.
+2. `sshmux-ssh` is a pane helper: it reads `SSHMUX_HOST` from the current
+   session, then connects via the ControlMaster socket (fast) or falls back
+   to `et`.
+3. With the tmux keybindings below, new windows and splits in an sshmux
+   session automatically connect to the same remote host.
+
+### Recommended tmux keybindings
+
+Add to `tmux.conf` (or a `conf.d` drop-in) to auto-connect new panes:
+
+```tmux
+bind c if-shell 'tmux show-env SSHMUX_HOST 2>/dev/null | grep -qv "^-"' \
+    'new-window "$HOME/.local/bin/sshmux-ssh"' \
+    'new-window'
+bind v if-shell 'tmux show-env SSHMUX_HOST 2>/dev/null | grep -qv "^-"' \
+    'split-window -h "$HOME/.local/bin/sshmux-ssh"' \
+    'split-window -h'
+bind s if-shell 'tmux show-env SSHMUX_HOST 2>/dev/null | grep -qv "^-"' \
+    'split-window -v "$HOME/.local/bin/sshmux-ssh"' \
+    'split-window -v'
+```
+
+### Dependencies
+
+`et`, `tmux`, `fzf`, `ssh`
+
 ## Vim
 
 Minimal XDG-compliant Vim configuration. `~/.vimrc` is a shim that sources
@@ -178,7 +226,7 @@ Leader is `<Space>`. Paste mode is auto-disabled on `InsertLeave`.
 
 | Package    | Description |
 |------------|-------------|
-| `bin`      | User scripts in `~/.local/bin`: `chscheme` (color scheme switcher), `cht.sh` (cheat sheet client) |
+| `bin`      | User scripts in `~/.local/bin`: `sshmux` / `sshmux-ssh` (tmux session manager for SSH hosts), `chscheme` (color scheme switcher), `cht.sh` (cheat sheet client) |
 | `fonts`    | Nerd Fonts (Hack, Roboto Mono) for terminal and editor icon support |
 | `kmonad`   | [KMonad](https://github.com/kmonad/kmonad) keyboard remapping config (Caps Lock as Ctrl/Esc) |
 | `systemd`  | User-level systemd service for kmonad |
@@ -258,6 +306,7 @@ External tools used by each package:
 | shell    | [`fzf`](https://github.com/junegunn/fzf), [`fd`](https://github.com/sharkdp/fd) (for `FZF_DEFAULT_COMMAND`) |
 | nvim     | A [Nerd Font](https://www.nerdfonts.com/) (for nvim-web-devicons), `git` (for lazy.nvim bootstrap) |
 | tmux     | [`fzf`](https://github.com/junegunn/fzf), `xclip` (for clipboard on Linux) |
+| bin      | [`et`](https://eternalterminal.dev/) (for `sshmux`), [`fzf`](https://github.com/junegunn/fzf) (for `sshmux`), `ssh` (for `sshmux` ControlMaster) |
 | kmonad   | [`kmonad`](https://github.com/kmonad/kmonad) binary, `uinput` kernel module |
 | i3       | `i3blocks`, `xbacklight` |
 | polybar  | `curl` (for weather script) |

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# sshmux-ssh — pane helper for sshmux sessions
+#
+# Reads SSHMUX_HOST from the current tmux session environment and connects
+# via SSH ControlMaster multiplexing (fast), falling back to et if the
+# ControlMaster socket is dead.
+
+set -euo pipefail
+
+_socket_dir() {
+    echo "${XDG_RUNTIME_DIR:-/tmp}/sshmux"
+}
+
+_sanitize_host() {
+    echo "$1" | tr './:@' '____'
+}
+
+_socket_path() {
+    echo "$(_socket_dir)/$(_sanitize_host "$1")"
+}
+
+# Read SSHMUX_HOST from current tmux session
+host=$(tmux show-environment SSHMUX_HOST 2>/dev/null | grep -v '^-' | cut -d= -f2- || true)
+
+if [ -z "$host" ]; then
+    echo "sshmux-ssh: not in an sshmux session (SSHMUX_HOST not set)" >&2
+    exec "${SHELL:-/bin/bash}"
+fi
+
+socket=$(_socket_path "$host")
+
+# If ControlMaster socket is alive, use SSH multiplexing (fast)
+if ssh -S "$socket" -O check "$host" 2>/dev/null; then
+    exec ssh -S "$socket" "$host"
+fi
+
+# Fallback to et
+exec et "$host"

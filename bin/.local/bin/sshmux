@@ -1,0 +1,317 @@
+#!/usr/bin/env bash
+# sshmux — tmux session manager for SSH hosts
+#
+# Manages tmux sessions backed by remote hosts, using eternal terminal (et)
+# for resilient primary connections and SSH ControlMaster multiplexing for
+# fast additional pane connections.
+#
+# Dependencies: et, tmux, fzf, ssh
+
+set -euo pipefail
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+_socket_dir() {
+    echo "${XDG_RUNTIME_DIR:-/tmp}/sshmux"
+}
+
+_sanitize_host() {
+    echo "$1" | tr './:@' '____'
+}
+
+_socket_path() {
+    echo "$(_socket_dir)/$(_sanitize_host "$1")"
+}
+
+_session_name() {
+    _sanitize_host "$1"
+}
+
+_ensure_socket_dir() {
+    local dir
+    dir=$(_socket_dir)
+    if [ ! -d "$dir" ]; then
+        mkdir -p "$dir"
+        chmod 700 "$dir"
+    fi
+}
+
+_check_deps() {
+    local missing=()
+    for cmd in et tmux fzf ssh; do
+        if ! command -v "$cmd" &>/dev/null; then
+            missing+=("$cmd")
+        fi
+    done
+    if [ ${#missing[@]} -gt 0 ]; then
+        echo "sshmux: missing dependencies: ${missing[*]}" >&2
+        exit 1
+    fi
+}
+
+_sshmux_sessions() {
+    # List tmux sessions that have SSHMUX_HOST set (non-removed)
+    tmux list-sessions -F '#{session_name}' 2>/dev/null | while read -r session; do
+        local host
+        host=$(tmux show-environment -t "=$session" SSHMUX_HOST 2>/dev/null | grep -v '^-' | cut -d= -f2- || true)
+        if [ -n "$host" ]; then
+            echo "$session $host"
+        fi
+    done
+}
+
+_controlmaster_status() {
+    local host="$1"
+    local socket
+    socket=$(_socket_path "$host")
+    if ssh -S "$socket" -O check "$host" 2>/dev/null; then
+        echo "connected"
+    else
+        echo "disconnected"
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Commands
+# ---------------------------------------------------------------------------
+
+cmd_connect() {
+    _check_deps
+
+    local host="$1"
+
+    if [ -z "$host" ]; then
+        # Parse ~/.ssh/config for Host entries, excluding wildcards
+        local hosts
+        hosts=$(awk '/^[Hh]ost / { for (i=2; i<=NF; i++) if ($i !~ /[*?]/) print $i }' ~/.ssh/config 2>/dev/null)
+        if [ -z "$hosts" ]; then
+            echo "sshmux: no hosts found in ~/.ssh/config" >&2
+            exit 1
+        fi
+        host=$(echo "$hosts" | fzf --prompt="sshmux connect> " --height=~50%) || exit 0
+    fi
+
+    local session socket
+    session=$(_session_name "$host")
+    socket=$(_socket_path "$host")
+
+    # Establish SSH ControlMaster in background
+    _ensure_socket_dir
+    if [ ! -S "$socket" ]; then
+        if ! ssh -fNM -S "$socket" "$host" 2>/dev/null; then
+            echo "sshmux: warning: SSH ControlMaster setup failed for $host" >&2
+            echo "sshmux: et will still work for the primary connection" >&2
+        fi
+    fi
+
+    # Create tmux session if it doesn't exist
+    if ! tmux has-session -t "=$session" 2>/dev/null; then
+        tmux new-session -d -s "$session" "et $host"
+    fi
+
+    # Store SSHMUX_HOST in session environment
+    tmux set-environment -t "=$session" SSHMUX_HOST "$host"
+
+    # Attach or switch
+    if [ -n "${TMUX:-}" ]; then
+        tmux switch-client -t "=$session"
+    else
+        tmux attach-session -t "=$session"
+    fi
+}
+
+cmd_list() {
+    local found=0
+    printf "%-30s %-40s %s\n" "SESSION" "HOST" "STATUS"
+    printf "%-30s %-40s %s\n" "-------" "----" "------"
+    _sshmux_sessions | while read -r session host; do
+        local status
+        status=$(_controlmaster_status "$host")
+        printf "%-30s %-40s %s\n" "$session" "$host" "$status"
+        found=1
+    done
+    if [ "$found" -eq 0 ] 2>/dev/null; then
+        echo "No sshmux sessions found."
+    fi
+}
+
+cmd_release() {
+    local release_all=0
+    local target=""
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --all) release_all=1; shift ;;
+            *) target="$1"; shift ;;
+        esac
+    done
+
+    local sessions
+    sessions=$(_sshmux_sessions)
+
+    if [ -z "$sessions" ]; then
+        echo "No sshmux sessions to release."
+        return
+    fi
+
+    if [ "$release_all" -eq 1 ]; then
+        echo "$sessions" | while read -r session host; do
+            _release_session "$session" "$host"
+        done
+        return
+    fi
+
+    if [ -n "$target" ]; then
+        local match
+        match=$(echo "$sessions" | awk -v t="$target" '$1 == t { print; exit }')
+        if [ -z "$match" ]; then
+            echo "sshmux: session '$target' not found" >&2
+            exit 1
+        fi
+        read -r session host <<< "$match"
+        _release_session "$session" "$host"
+        return
+    fi
+
+    local count
+    count=$(echo "$sessions" | wc -l)
+    if [ "$count" -eq 1 ]; then
+        read -r session host <<< "$sessions"
+        _release_session "$session" "$host"
+    else
+        local selection
+        selection=$(echo "$sessions" | awk '{print $1}' | fzf --prompt="sshmux release> " --height=~50%) || exit 0
+        local match
+        match=$(echo "$sessions" | awk -v t="$selection" '$1 == t { print; exit }')
+        read -r session host <<< "$match"
+        _release_session "$session" "$host"
+    fi
+}
+
+_release_session() {
+    local session="$1"
+    local host="$2"
+    local socket
+    socket=$(_socket_path "$host")
+
+    # Close SSH ControlMaster
+    if [ -S "$socket" ]; then
+        ssh -S "$socket" -O exit "$host" 2>/dev/null || true
+    fi
+
+    # Kill tmux session
+    tmux kill-session -t "=$session" 2>/dev/null || true
+
+    echo "Released: $session ($host)"
+}
+
+cmd_clean() {
+    local cleaned=0
+
+    # Clean stale tmux sessions
+    _sshmux_sessions | while read -r session host; do
+        local socket
+        socket=$(_socket_path "$host")
+        if ! ssh -S "$socket" -O check "$host" 2>/dev/null; then
+            tmux kill-session -t "=$session" 2>/dev/null || true
+            echo "Cleaned stale session: $session ($host)"
+            cleaned=1
+        fi
+    done
+
+    # Clean orphaned socket files
+    local socket_dir
+    socket_dir=$(_socket_dir)
+    if [ -d "$socket_dir" ]; then
+        for socket_file in "$socket_dir"/*; do
+            [ -e "$socket_file" ] || continue
+            if [ ! -S "$socket_file" ]; then
+                rm -f "$socket_file"
+                echo "Removed orphaned socket: $socket_file"
+                cleaned=1
+            fi
+        done
+    fi
+
+    if [ "$cleaned" -eq 0 ] 2>/dev/null; then
+        echo "Nothing to clean."
+    fi
+}
+
+cmd_help() {
+    cat <<'EOF'
+sshmux — tmux session manager for SSH hosts
+
+USAGE
+    sshmux <command> [options]
+
+COMMANDS
+    connect [user@host]    Connect to a host (interactive picker if no host given)
+    list                   List active sshmux sessions with connection status
+    release [--all]        Release (disconnect + kill) sshmux sessions
+    clean                  Remove stale sessions with dead connections
+    help                   Show this help
+
+DESCRIPTION
+    sshmux manages tmux sessions backed by remote hosts. It uses eternal
+    terminal (et) for resilient primary connections and SSH ControlMaster
+    multiplexing for fast additional pane connections via sshmux-ssh.
+
+    Each session stores SSHMUX_HOST in the tmux session environment. New
+    panes/windows can read this variable to auto-connect to the same host.
+
+DEPENDENCIES
+    et       Eternal Terminal — resilient remote shell
+    tmux     Terminal multiplexer
+    fzf      Fuzzy finder for interactive host selection
+    ssh      OpenSSH client with ControlMaster support
+
+TMUX CONFIGURATION
+    Add to your tmux.conf to auto-connect new windows/panes in sshmux sessions:
+
+    # sshmux: auto-connect new windows/panes to remote host via sshmux-ssh
+    bind c if-shell 'tmux show-env SSHMUX_HOST 2>/dev/null | grep -qv "^-"' \
+        'new-window "$HOME/.local/bin/sshmux-ssh"' \
+        'new-window'
+    bind v if-shell 'tmux show-env SSHMUX_HOST 2>/dev/null | grep -qv "^-"' \
+        'split-window -h "$HOME/.local/bin/sshmux-ssh"' \
+        'split-window -h'
+    bind s if-shell 'tmux show-env SSHMUX_HOST 2>/dev/null | grep -qv "^-"' \
+        'split-window -v "$HOME/.local/bin/sshmux-ssh"' \
+        'split-window -v'
+
+ENVIRONMENT
+    SSHMUX_HOST          Set per tmux session; the host to connect to
+    XDG_RUNTIME_DIR      Base directory for ControlMaster sockets
+                         (falls back to /tmp)
+
+SSH CONTROLMASTER SOCKETS
+    ${XDG_RUNTIME_DIR:-/tmp}/sshmux/<sanitized-host>
+EOF
+}
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+main() {
+    local cmd="${1:-help}"
+    shift 2>/dev/null || true
+
+    case "$cmd" in
+        connect)  cmd_connect "${1:-}" ;;
+        list|ls)  cmd_list ;;
+        release)  cmd_release "$@" ;;
+        clean)    cmd_clean ;;
+        help|-h|--help) cmd_help ;;
+        *)
+            echo "sshmux: unknown command '$cmd'" >&2
+            echo "Run 'sshmux help' for usage." >&2
+            exit 1
+            ;;
+    esac
+}
+
+main "$@"
