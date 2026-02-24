@@ -55,8 +55,10 @@ __prompt_vcs() {
 }
 
 __prompt_cmd() {
+    local last_exit=$?
     local bold_yellow='\[\e[1;33m\]'
     local bold_cyan='\[\e[1;36m\]'
+    local bold_red='\[\e[1;31m\]'
     local reset='\[\e[0m\]'
 
     local depth=$((SHLVL - PROMPT_BASE_SHLVL + 1))
@@ -66,7 +68,10 @@ __prompt_cmd() {
     local jobs_indicator=""
     [[ $(jobs -p | wc -l) -gt 0 ]] && jobs_indicator="${bold_yellow}✦${reset} "
 
-    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${jobs_indicator}${bold_yellow}${chevrons}${reset} "
+    local exit_indicator=""
+    (( last_exit != 0 )) && exit_indicator="${bold_red}✘${last_exit}${reset} "
+
+    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${jobs_indicator}${exit_indicator}${bold_yellow}${chevrons}${reset} "
 }
 
 PROMPT_COMMAND=__prompt_cmd

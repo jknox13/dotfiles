@@ -129,7 +129,7 @@ __prompt_precmd() {
 }
 add-zsh-hook precmd __prompt_precmd
 
-PROMPT=$'\n''%B%F{yellow}%n@%m%f%b in %B%F{cyan}$(__prompt_dir)%f%b${__prompt_vcs}'$'\n''%(1j.%B%F{yellow}✦%f%b .)${__prompt_chevron} '
+PROMPT=$'\n''%B%F{yellow}%n@%m%f%b in %B%F{cyan}$(__prompt_dir)%f%b${__prompt_vcs}'$'\n''%(1j.%B%F{yellow}✦%f%b .)%(?..%B%F{red}✘%?%f%b )${__prompt_chevron} '
 
 # -----------------------------------------------------------------------------
 # Key bindings
