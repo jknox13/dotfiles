@@ -2,8 +2,13 @@
 *.zcompdump
 *.zwc
 *.uuid
+*.swp
+*.swo
+*~
+.DS_Store
 zsh/.config/zsh/.zcompdump
 zsh/.config/zsh/conf.d
 bash/.config/bash/conf.d
 tmux/.config/tmux/conf.d
 nvim/.config/nvim/after
+zsh/.local
