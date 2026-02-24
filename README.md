@@ -97,21 +97,40 @@ stow shell bash zsh
 
 ### Prompt
 
-Both shells use the same two-line prompt style:
+Both shells use the same two-line prompt layout, inspired by
+[wincent/wincent](https://github.com/wincent/wincent):
 
 ```
-user@hostname in directory on branch
-❯
+(ssh)user@hostname in directory 🔒 on branch *+? ↑1↓2
+✦ ✘1 (ROOT) (venv) ❯❯
 ```
 
-- `user@hostname` bold yellow, `directory` bold cyan, `branch` bold magenta
-- `❯` bold green (exit 0) or bold red (non-zero)
+**Line 1 -- context:**
+
+| Element              | When shown             | Color         |
+|----------------------|------------------------|---------------|
+| `(ssh)`              | `$SSH_CONNECTION` set  | bold light green |
+| `user@hostname`      | always                 | bold yellow   |
+| `directory`          | always (repo-relative) | bold cyan     |
+| 🔒                   | pwd is read-only       | yellow        |
+| `branch` / `HEAD (sha)` | inside git/hg repo | bold magenta  |
+| `*` `+` `?` `↑N` `↓N` | git dirty/staged/untracked/ahead/behind (zsh only) | red/green/blue/cyan |
+
+**Line 2 -- status indicators (left of chevron):**
+
+| Element   | When shown              | Color      |
+|-----------|-------------------------|------------|
+| `✦`       | background jobs exist   | bold yellow |
+| `✘N`      | last exit code non-zero | bold red   |
+| `(ROOT)`  | running as root         | bold red   |
+| `(venv)`  | `$VIRTUAL_ENV` set      | green      |
+| `❯` (repeated) | always (count = shell nesting depth) | bold yellow |
+
 - Directory is trimmed to the repo root inside git/hg repositories
 - Git: shows branch name, or `HEAD (sha)` when detached
 - Mercurial: shows active bookmark with short node, read directly from
   `.hg/dirstate` and `.hg/bookmarks.current` (no Python startup)
-- Zsh computes VCS info asynchronously via `zle -F`; zsh also shows
-  dirty (`*`), staged (`+`), and untracked (`?`) indicators
+- Zsh computes VCS info asynchronously via `zle -F`
 
 ## Neovim
 
