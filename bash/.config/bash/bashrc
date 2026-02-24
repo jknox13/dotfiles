@@ -71,7 +71,10 @@ __prompt_cmd() {
     local exit_indicator=""
     (( last_exit != 0 )) && exit_indicator="${bold_red}✘${last_exit}${reset} "
 
-    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${jobs_indicator}${exit_indicator}${bold_yellow}${chevrons}${reset} "
+    local root_indicator=""
+    (( EUID == 0 )) && root_indicator="${bold_red}(ROOT)${reset} "
+
+    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${jobs_indicator}${exit_indicator}${root_indicator}${bold_yellow}${chevrons}${reset} "
 }
 
 PROMPT_COMMAND=__prompt_cmd
