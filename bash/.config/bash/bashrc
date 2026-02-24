@@ -80,7 +80,10 @@ __prompt_cmd() {
     local readonly_indicator=""
     [[ ! -w . ]] && readonly_indicator=" \[\e[33m\]🔒\[\e[0m\]"
 
-    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}${readonly_indicator}$(__prompt_vcs)\n${jobs_indicator}${exit_indicator}${root_indicator}${venv_indicator}${bold_yellow}${chevrons}${reset} "
+    local ssh_indicator=""
+    [[ -n "$SSH_CONNECTION" ]] && ssh_indicator="\[\e[1;92m\](ssh)\[\e[0m\]"
+
+    PS1="\n${ssh_indicator}${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}${readonly_indicator}$(__prompt_vcs)\n${jobs_indicator}${exit_indicator}${root_indicator}${venv_indicator}${bold_yellow}${chevrons}${reset} "
 }
 
 PROMPT_COMMAND=__prompt_cmd

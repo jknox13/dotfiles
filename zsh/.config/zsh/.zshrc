@@ -125,11 +125,14 @@ __prompt_async_start() {
 __prompt_precmd() {
     local depth=$((SHLVL - PROMPT_BASE_SHLVL + 1))
     __prompt_chevron="%B%F{yellow}${(pl:$depth::❯:)}%f%b"
+    __prompt_dir_str="$(__prompt_dir)"
+    __prompt_readonly=""
+    [[ ! -w . ]] && __prompt_readonly=" %F{yellow}🔒%f"
     __prompt_async_start
 }
 add-zsh-hook precmd __prompt_precmd
 
-PROMPT=$'\n''%B%F{yellow}%n@%m%f%b in %B%F{cyan}$(__prompt_dir)%f%b$([[ ! -w . ]] && print -n " %F{yellow}🔒%f")${__prompt_vcs}'$'\n''%(1j.%B%F{yellow}✦%f%b .)%(?..%B%F{red}✘%?%f%b )%(!.%B%F{red}(ROOT)%f%b .)${VIRTUAL_ENV:+%F{green\}(${VIRTUAL_ENV:t})%f }${__prompt_chevron} '
+PROMPT=$'\n''${SSH_CONNECTION:+%B%F{green\}(ssh)%f%b}%B%F{yellow}%n@%m%f%b in %B%F{cyan}${__prompt_dir_str}%f%b${__prompt_readonly}${__prompt_vcs}'$'\n''%(1j.%B%F{yellow}✦%f%b .)%(?..%B%F{red}✘%?%f%b )%(!.%B%F{red}(ROOT)%f%b .)${VIRTUAL_ENV:+%F{green\}(${VIRTUAL_ENV:t})%f }${__prompt_chevron} '
 
 # -----------------------------------------------------------------------------
 # Key bindings
@@ -154,7 +157,7 @@ for _rc in "$XDG_CONFIG_HOME/zsh/conf.d/"*.zsh(N); do source "$_rc"; done
 # -----------------------------------------------------------------------------
 [[ -d "$XDG_DATA_HOME/zsh" ]] || mkdir -p "$XDG_DATA_HOME/zsh"
 export HISTFILE="$XDG_DATA_HOME/zsh/history"
-export HISTFILESIZE=130000
+export HISTSIZE=130000
 export SAVEHIST=130000
 
 [[ -d "$XDG_CACHE_HOME/zsh" ]] || mkdir -p "$XDG_CACHE_HOME/zsh"
