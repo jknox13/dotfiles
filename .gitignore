@@ -6,7 +6,6 @@
 *.swo
 *~
 .DS_Store
-zsh/.config/zsh/.zcompdump
 zsh/.config/zsh/conf.d
 bash/.config/bash/conf.d
 tmux/.config/tmux/conf.d
