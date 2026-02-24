@@ -63,7 +63,10 @@ __prompt_cmd() {
     local chevrons=""
     for ((i=0; i<depth; i++)); do chevrons+="❯"; done
 
-    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${bold_yellow}${chevrons}${reset} "
+    local jobs_indicator=""
+    [[ $(jobs -p | wc -l) -gt 0 ]] && jobs_indicator="${bold_yellow}✦${reset} "
+
+    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${jobs_indicator}${bold_yellow}${chevrons}${reset} "
 }
 
 PROMPT_COMMAND=__prompt_cmd
