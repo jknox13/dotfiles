@@ -24,3 +24,6 @@ export PATH="$PATH:$PYTHONUSERBASE/bin"
 
 # rust cargo
 export PATH="$PATH:$HOME/.cargo/bin"
+
+# shell nesting depth baseline (inherited by child shells)
+export PROMPT_BASE_SHLVL=${PROMPT_BASE_SHLVL:-$SHLVL}

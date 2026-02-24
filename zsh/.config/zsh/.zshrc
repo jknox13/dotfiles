@@ -123,14 +123,8 @@ __prompt_async_start() {
 }
 
 __prompt_precmd() {
-    local exit_code=$?
-
-    if [ "$exit_code" -eq 0 ]; then
-        __prompt_chevron="%B%F{green}❯%f%b"
-    else
-        __prompt_chevron="%B%F{red}❯%f%b"
-    fi
-
+    local depth=$((SHLVL - PROMPT_BASE_SHLVL + 1))
+    __prompt_chevron="%B%F{yellow}${(pl:$depth::❯:)}%f%b"
     __prompt_async_start
 }
 add-zsh-hook precmd __prompt_precmd

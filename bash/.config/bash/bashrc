@@ -55,21 +55,15 @@ __prompt_vcs() {
 }
 
 __prompt_cmd() {
-    local exit_code=$?
-    local bold_red='\[\e[1;31m\]'
-    local bold_green='\[\e[1;32m\]'
     local bold_yellow='\[\e[1;33m\]'
     local bold_cyan='\[\e[1;36m\]'
     local reset='\[\e[0m\]'
 
-    local chevron_color
-    if [ "$exit_code" -eq 0 ]; then
-        chevron_color=$bold_green
-    else
-        chevron_color=$bold_red
-    fi
+    local depth=$((SHLVL - PROMPT_BASE_SHLVL + 1))
+    local chevrons=""
+    for ((i=0; i<depth; i++)); do chevrons+="❯"; done
 
-    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${chevron_color}❯${reset} "
+    PS1="\n${bold_yellow}\u@\h${reset} in ${bold_cyan}$(__prompt_dir)${reset}$(__prompt_vcs)\n${bold_yellow}${chevrons}${reset} "
 }
 
 PROMPT_COMMAND=__prompt_cmd
