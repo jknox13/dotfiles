@@ -1,24 +1,64 @@
 # Personal Dotfiles
 
-Uses `stow` to manage symlinks.
+Modular dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
+Each top-level directory is a stow package whose contents mirror `$HOME`.
 
-**Platform Table**
-|	       	| Arch Linux	| Mac OSX	|
-| --------- 	| --------- 	| --------- 	|
-| X		| [x]		|	    	|
-| alacritty	| [x]		| [x]		|
-| bash		| [x]		| [x]		|
-| feh		| [x]		|   		|
-| fonts		| [x]		|   		|
-| homebrew	| 		| [x]		|
-| i3		| [x]		|   		|
-| karabiner	| 	    	| [x]		|
-| neofetch	| [x]		| [x]		|
-| nvim		| [x]		| [x]		|
-| polybar	| [x]		|   		|
-| shell		| [x]		| [x]		|
-| tmux		| [x]		| [x]		|
-| zsh		| [x]		| [x]		|
+## Design principles
+
+- **XDG Base Directory Specification** -- all config lives under `~/.config`,
+  data under `~/.local/share`, cache under `~/.cache`, and scripts under
+  `~/.local/bin`. Zsh's `ZDOTDIR` is redirected to `$XDG_CONFIG_HOME/zsh`
+  so `$HOME` stays clean.
+- **Composable** -- `conf.d` drop-in directories let a separate stow repo
+  layer on machine-specific or work-specific config without touching this repo.
+- **`--no-folding`** -- stow is configured (via `stow/.stowrc`) to never
+  replace a real directory with a symlink, so multiple stow repos can coexist
+  in the same target directories.
+
+## Quickstart
+
+```bash
+git clone <repo> ~/.dotfiles
+cd ~/.dotfiles
+
+# 1. Install stow's own config first (provides --no-folding)
+stow stow
+
+# 2. Shell
+stow shell bash zsh
+
+# 3. Editors, terminal, tmux
+stow nvim vim tmux alacritty
+
+# 4. Everything else (pick what applies to your platform)
+stow bin fonts npm
+```
+
+## Platform table
+
+|            | Arch Linux | macOS |
+| ---------- | ---------- | ----- |
+| alacritty  | x          | x     |
+| bash       | x          | x     |
+| bin        | x          | x     |
+| feh        | x          |       |
+| fonts      | x          |       |
+| gtk        | x          |       |
+| homebrew   |            | x     |
+| i3         | x          |       |
+| karabiner  |            | x     |
+| kmonad     | x          |       |
+| neofetch   | x          | x     |
+| npm        | x          | x     |
+| nvim       | x          | x     |
+| polybar    | x          |       |
+| shell      | x          | x     |
+| stow       | x          | x     |
+| system     | x          |       |
+| systemd    | x          |       |
+| tmux       | x          | x     |
+| vim        | x          | x     |
+| zsh        | x          | x     |
 
 ## Shell setup
 
@@ -30,6 +70,29 @@ Three stow packages provide shell configuration:
 
 ```
 stow shell bash zsh
+```
+
+### Shell loading order
+
+**Zsh:**
+```
+~/.zshenv                          sets XDG vars, ZDOTDIR
+  -> ~/.config/zsh/.zshrc
+       -> sources ~/.config/shell/exports   (shared)
+       -> sources ~/.config/shell/aliases   (shared)
+       -> sources ~/.config/shell/vcs       (shared hg helper)
+       -> sources ~/.config/zsh/conf.d/*.zsh (extensions)
+```
+
+**Bash:**
+```
+~/.bash_profile                    sources ~/.bashrc
+  -> ~/.bashrc                     sets XDG vars
+       -> ~/.config/bash/bashrc
+            -> sources ~/.config/shell/exports
+            -> sources ~/.config/shell/aliases
+            -> sources ~/.config/shell/vcs
+            -> sources ~/.config/bash/conf.d/*.bash (extensions)
 ```
 
 ### Prompt
@@ -45,17 +108,90 @@ user@hostname in directory on branch
 - `❯` bold green (exit 0) or bold red (non-zero)
 - Directory is trimmed to the repo root inside git/hg repositories
 - Git: shows branch name, or `HEAD (sha)` when detached
-- Mercurial: shows active bookmark with short node, read directly from `.hg/dirstate` and `.hg/bookmarks.current` (no Python startup)
-- Zsh computes VCS info asynchronously via `zle -F`; zsh also shows dirty (`*`), staged (`+`), and untracked (`?`) indicators
+- Mercurial: shows active bookmark with short node, read directly from
+  `.hg/dirstate` and `.hg/bookmarks.current` (no Python startup)
+- Zsh computes VCS info asynchronously via `zle -F`; zsh also shows
+  dirty (`*`), staged (`+`), and untracked (`?`) indicators
+
+## Neovim
+
+Lua-based configuration using [lazy.nvim](https://github.com/folke/lazy.nvim)
+as the plugin manager. Leader is `<Space>`.
+
+Structure:
+
+```
+nvim/.config/nvim/
+├── init.lua              # leader, core requires, lazy.nvim bootstrap
+├── lua/config/
+│   ├── options.lua       # vim.opt settings
+│   ├── keymaps.lua       # global key mappings
+│   └── autocmds.lua      # autocommands
+├── lua/plugins/          # lazy.nvim plugin specs
+│   ├── lsp.lua           # language server setup
+│   ├── cmp.lua           # completion (nvim-cmp)
+│   ├── telescope.lua     # fuzzy finder
+│   ├── treesitter.lua    # syntax highlighting
+│   ├── colorscheme.lua   # ayu theme (dark/mirage/light)
+│   ├── editor.lua        # general editor plugins
+│   ├── writing.lua       # prose/markdown tools
+│   └── kmonad.lua        # kmonad filetype support
+├── ftdetect/             # custom filetype detection
+└── ftplugin/             # per-filetype settings
+```
+
+Key mappings:
+
+| Mapping           | Action                                |
+|-------------------|---------------------------------------|
+| `<leader>i`       | Edit init.lua                         |
+| `<leader><CR>`    | Source init.lua                        |
+| `<leader>eh`      | Edit file relative to current buffer  |
+| `<leader>cd`      | `:cd` to current file's directory     |
+| `<leader>sp`      | Enable spell checking                 |
+| `<leader>csd/m/l` | Switch colorscheme (dark/mirage/light)|
+
+Arrow keys are disabled in normal mode.
 
 ## Tmux
 
-Vi-style keybindings for pane navigation (`h/j/k/l`) and splitting (`v`/`s`). Mouse and system clipboard support via `xclip`. Status bar shows session name, user, host, and time. Windows and panes are numbered from 1.
+Vi-style keybindings for pane navigation (`h/j/k/l`) and splitting (`v`/`s`).
+Mouse and system clipboard support via `xclip`. Status bar shows session name,
+user, host, and time. Windows and panes are numbered from 1.
 
 Key bindings:
-- `prefix a` -- fuzzy-search windows (via `fzf`)
-- `prefix v` / `prefix s` -- split horizontal / vertical
-- `prefix R` -- reload config
+
+| Binding      | Action                            |
+|--------------|-----------------------------------|
+| `prefix a`   | Fuzzy-search windows (via `fzf`)  |
+| `prefix v`   | Split horizontal                  |
+| `prefix s`   | Split vertical                    |
+| `prefix R`   | Reload config                     |
+
+## Vim
+
+Minimal XDG-compliant Vim configuration. `~/.vimrc` is a shim that sources
+`$XDG_CONFIG_HOME/vim/vimrc`, which in turn loads any `conf.d/*.vim` drop-ins.
+Leader is `<Space>`. Paste mode is auto-disabled on `InsertLeave`.
+
+## Other packages
+
+| Package    | Description |
+|------------|-------------|
+| `bin`      | User scripts in `~/.local/bin`: `chscheme` (color scheme switcher), `cht.sh` (cheat sheet client) |
+| `fonts`    | Nerd Fonts (Hack, Roboto Mono) for terminal and editor icon support |
+| `kmonad`   | [KMonad](https://github.com/kmonad/kmonad) keyboard remapping config (Caps Lock as Ctrl/Esc) |
+| `systemd`  | User-level systemd service for kmonad |
+| `system`   | Udev rules for kmonad (`uinput`) and ZSA keyboard flashing (`wally`). **Not stowable** -- must be copied manually to `/etc/udev/rules.d/` |
+| `karabiner`| [Karabiner-Elements](https://karabiner-elements.pqrs.org/) config using [Goku](https://github.com/yqrashawn/GokuRakuJoudo) DSL (macOS key remapping) |
+| `npm`      | XDG-compliant npm config (redirects cache and tmp) |
+| `gtk`      | GTK 3 theme settings (Arc-Dark) |
+| `i3`       | i3 window manager config with i3blocks |
+| `polybar`  | Polybar status bar with weather script |
+| `feh`      | Feh image viewer key/button bindings |
+| `alacritty`| Alacritty terminal emulator config |
+| `neofetch` | System info display config |
+| `homebrew` | Global Brewfile for macOS package management |
 
 ## Local / work-specific extensions
 
@@ -67,11 +203,13 @@ is loaded automatically through `conf.d` directories and conditional includes.
 
 | Tool | Extension point | Pattern |
 |------|----------------|---------|
-| zsh  | `$XDG_CONFIG_HOME/zsh/conf.d/*.zsh` | Glob with `(N)` — no error if empty |
+| zsh  | `$XDG_CONFIG_HOME/zsh/conf.d/*.zsh` | Glob with `(N)` -- no error if empty |
 | bash | `$XDG_CONFIG_HOME/bash/conf.d/*.bash` | Guarded `[ -f ]` loop |
-| tmux | `$XDG_CONFIG_HOME/tmux/conf.d/*.conf` | `source-file -q` glob — silent if empty |
-| git  | `~/.gitconfig-work` (or any path) | `[include] path = ...` — no-op if missing |
-| nvim | `$XDG_CONFIG_HOME/nvim/plugin/*.vim` | Built-in `plugin/` auto-load |
+| tmux | `$XDG_CONFIG_HOME/tmux/conf.d/*.conf` | `source-file -q` glob -- silent if empty |
+| vim  | `$XDG_CONFIG_HOME/vim/conf.d/*.vim` | `glob()` + `source` loop |
+| nvim | `$XDG_CONFIG_HOME/nvim/after/` | Built-in `after/` auto-load (ftdetect, ftplugin, plugin) |
+| nvim | `$XDG_CONFIG_HOME/nvim/lua/plugins/*.lua` | lazy.nvim loads all modules in `lua/plugins/` |
+| git  | `~/.gitconfig-work` (or any path) | `[include] path = ...` -- no-op if missing |
 | PATH | `$HOME/.local/bin` | Binaries from any stow repo land here |
 
 ### Setting up a work stow repo
@@ -100,8 +238,8 @@ stow -t ~ zsh git
 
 Each stow package mirrors the XDG directory structure so that `stow -t ~`
 places files exactly where the shell/tool expects them. The personal repo
-`.gitignore` already excludes the `conf.d` directories, so stowed symlinks
-won't show up as untracked files.
+`.gitignore` already excludes the `conf.d` directories and `nvim/after`, so
+stowed symlinks from a work repo won't show up as untracked files here.
 
 ### Stow `--no-folding`
 
@@ -113,37 +251,55 @@ new machine so all subsequent operations pick up this setting.
 
 ## Dependencies
 
-External tools required by each stow package:
+External tools used by each package:
 
-| Package | Dependencies |
-|---------|-------------|
-| nvim    | A [Nerd Font](https://www.nerdfonts.com/) (for nvim-web-devicons) |
-| tmux    | [`fzf`](https://github.com/junegunn/fzf) |
+| Package  | Dependencies |
+|----------|-------------|
+| shell    | [`fzf`](https://github.com/junegunn/fzf), [`fd`](https://github.com/sharkdp/fd) (for `FZF_DEFAULT_COMMAND`) |
+| nvim     | A [Nerd Font](https://www.nerdfonts.com/) (for nvim-web-devicons), `git` (for lazy.nvim bootstrap) |
+| tmux     | [`fzf`](https://github.com/junegunn/fzf), `xclip` (for clipboard on Linux) |
+| kmonad   | [`kmonad`](https://github.com/kmonad/kmonad) binary, `uinput` kernel module |
+| i3       | `i3blocks`, `xbacklight` |
+| polybar  | `curl` (for weather script) |
+
+## macOS instructions
+
+### Install Homebrew
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew install stow
+cd ~/.dotfiles
+stow homebrew
+brew bundle --global
+```
+
+### Caps to Ctrl/Esc (macOS)
+
+Install Karabiner-Elements and Goku, then stow the `karabiner` package.
 
 ## Arch Linux instructions
-### Caps to ctrl & esc
-1. install [`xcape`](https://archlinux.org/packages/community/x86_64/xcape)
-2. Add to i3 config
-```
-exec setxkbmap -layout us -option ctrl:nocaps
-exec_always xcape -e 'Control_L=Escape'
+
+### Caps to Ctrl/Esc
+
+**Option A: xcape (X11)**
+
+```bash
+pacman -S xcape
+# Add to i3 config:
+# exec setxkbmap -layout us -option ctrl:nocaps
+# exec_always xcape -e 'Control_L=Escape'
 ```
 
-## Mac OSX instructions
-### Install Homebrew
-(and other utilities you'll need including `stow`)
-1. Install homebrew: `/usr/bin/ruby -e "$(curl -fsSL 
-   https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-2. `brew install stow`
-3. `stow homebrew`
-4. Install `brew bundle --global`
+**Option B: KMonad**
 
-
-### [Optional] Latex
-1. Install BasicTex `brew cask install basictex`
-    * log into new terminal for changes to take place `zsh --login`
-2. Update tool manager `sudo tlmgr update --self`
-3. Install requisite tools
-```
-sudo tlmgr install textpos isodate substr titlesec
+```bash
+stow kmonad systemd
+# Copy udev rules
+sudo cp system/40-input.rules /etc/udev/rules.d/
+sudo groupadd uinput
+sudo usermod -aG input,uinput $(whoami)
+sudo udevadm control --reload-rules
+# Enable the service
+systemctl --user enable --now kmonad.service
 ```
